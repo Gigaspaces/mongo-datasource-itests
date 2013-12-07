@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.gigaspaces.mongo-datasource-itests</groupId>
+	<artifactId>itests</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<repositories>
+		<repository>
+			<id>org.openspaces</id>
+			<name>OpenSpaces</name>
+			<url>http://maven-repository.openspaces.org</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.gigaspaces</groupId>
+			<artifactId>mongo-datasource</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gigaspaces.quality</groupId>
+			<artifactId>tf</artifactId>
+			<version>1.5.0</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<testSourceDirectory>../src/test/java</testSourceDirectory>
+		<testResources>
+			<testResource>
+				<directory>../src/test/resources</directory>
+			</testResource>
+		</testResources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>default-jar</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+						<phase>package</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.12.4</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+					<parallel>classes</parallel>
+					<forkMode>pertest</forkMode>
+					<argLine>-Xms1024m -Xmx1024m</argLine>
+					<threadCount>4</threadCount>
+					<includes>
+						<include>**/MongoTestSuite.java</include>
+						<include>**/MongoSystemTestSuite.java</include>
+					</includes>
+					<excludes>
+						<exclude>**/*Abstract*</exclude>
+						<exclude>**/*Abstract*</exclude>
+					</excludes>
+					<additionalClasspathElements>
+						<additionalClasspathElement>src/test/resources</additionalClasspathElement>
+					</additionalClasspathElements>
+				</configuration>
+			</plugin>
+
+
+
+		</plugins>
+	</build>
+
+
+</project>
