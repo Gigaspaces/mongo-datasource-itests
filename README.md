@@ -1,7 +1,7 @@
 mongo-datasource-itests
 =======================
 
-Integration tests for moe repo
+Integration tests for mongo-datasource repo
 Prerequisites
 =============
 
@@ -22,8 +22,7 @@ Build
 * run integration tests `mvn install` 
 
 > ##### Notes #####
-> * its recommended that you run `mvn clean install` and then running the testing phases separately `mvn surefire:test integration-test` 
-  because integration and system test can take long time
+
 > * eclipse users uses m2e plugin sometimes miss synchronization its recommended to right click on 
   mongodb-datasource project and from the menu [Maven]-> [Update project]
 
@@ -32,10 +31,10 @@ Build
 Dependencies
 ============
     <dependency>
-			<groupId>com.gigaspaces</groupId>
-			<artifactId>mongo-datasource</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+	<groupId>com.gigaspaces</groupId>
+	<artifactId>mongo-datasource</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+    </dependency>
 		<dependency>
 			<groupId>com.gigaspaces.quality</groupId>
 			<artifactId>tf</artifactId>
