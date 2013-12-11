@@ -38,7 +38,7 @@ public class DocumentPojoWithDynamicPropsMongoSpaceTest extends
 
 	@Override
 	protected String getPUJar() {
-		return "/document-pojo-with-dynamic-props-0.0.1-SNAPSHOT.jar";
+		return "/document-pojo-with-dynamic-properties-0.0.1-SNAPSHOT.jar";
 	}
 
 	private void testWriteDocumentReadPojo() {

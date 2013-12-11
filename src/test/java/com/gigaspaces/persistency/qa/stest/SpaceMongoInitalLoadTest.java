@@ -31,11 +31,10 @@ public class SpaceMongoInitalLoadTest extends AbstractSystemTestUnit {
 	@Override
 	public void test() {
 		try {
-			fillClusterData();
-			teardownCluster();
-			initConfigurersAndStartSpaces();
-
-			assertValidInitialDataLoad();
+            fillClusterData();
+            teardownCluster();
+            initConfigurersAndStartSpaces();
+            assertValidInitialDataLoad();
 		} catch (Exception e) {
 			throw new AssertionError(e);
 		}
