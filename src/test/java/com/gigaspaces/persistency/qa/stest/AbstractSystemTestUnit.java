@@ -3,6 +3,7 @@ package com.gigaspaces.persistency.qa.stest;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import com.gigaspaces.cluster.activeelection.SpaceMode;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.After;
 import org.junit.Assert;
@@ -13,6 +14,7 @@ import org.openspaces.admin.AdminFactory;
 import org.openspaces.admin.pu.ProcessingUnit;
 import org.openspaces.admin.pu.ProcessingUnitDeployment;
 import org.openspaces.core.GigaSpace;
+import org.openspaces.admin.space.SpaceInstance;
 
 import com.gigaspaces.client.ClearModifiers;
 import com.gigaspaces.client.CountModifiers;
@@ -256,5 +258,23 @@ public abstract class AbstractSystemTestUnit
                 }
             }
         }
+    }
+
+    /**
+     * restart the gscs which contain pu.
+     * NOTE: only works on 2,1 topology
+     * @param pu - the gscs which contain pu will be restarted
+     */
+    protected void restartPuGscs(ProcessingUnit pu){
+        SpaceInstance[] instances = pu.getSpace().getInstances();
+        for (SpaceInstance inst : instances) {
+            if (inst.getMode().equals(SpaceMode.PRIMARY) || inst.getMode().equals(SpaceMode.BACKUP)){
+                if (inst.getVirtualMachine().getGridServiceContainer() != null)
+                    inst.getVirtualMachine().getGridServiceContainer().restart();
+            }
+        }
+        pu.waitFor(2);
+        pu.getSpace().waitFor(1, SpaceMode.PRIMARY);
+        pu.getSpace().waitFor(1, SpaceMode.BACKUP);
     }
 }
