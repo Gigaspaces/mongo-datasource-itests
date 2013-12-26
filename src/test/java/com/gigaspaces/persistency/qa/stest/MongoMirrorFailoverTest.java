@@ -25,7 +25,7 @@ public class MongoMirrorFailoverTest extends AbstractSystemTestUnit {
                 try {
                     //sleep in order to let mirror get restarted first
                     Thread.sleep(1000);
-                    for (int i = 0; i < 15; i++) {
+                    for (int i = 0; i < 10; i++) {
                         issuePojos.add(new IssuePojo(i + 1, "dank" + (i + 1)));
                     }
                     gigaSpace.writeMultiple(issuePojos.toArray(new IssuePojo[] {}));
@@ -54,11 +54,23 @@ public class MongoMirrorFailoverTest extends AbstractSystemTestUnit {
                 pojos.size());
 
         AssertUtils.assertEquivalent("", issuePojos, pojos);
+
+        assertMongoEqualsSpace(issuePojos);
+
         say("Mongo Mirror Failover test passed!");
     }
 
     @Override
     protected String getPUJar() {
-        return "/all-in-cache-0.0.1-SNAPSHOT.jar";
+        return "/lru-0.0.1-SNAPSHOT.jar";
+    }
+
+    private void assertMongoEqualsSpace(List<IssuePojo> beforeClear) {
+        clearMemory(gigaSpace);
+        junit.framework.Assert.assertEquals(0, gigaSpace.count(null));
+        List<IssuePojo> pojos = Arrays.asList(gigaSpace.readMultiple(
+                new IssuePojo(), 20));
+        AssertUtils.assertEquivalent("space is not equivalent to mongo", beforeClear, pojos);
+
     }
 }

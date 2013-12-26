@@ -23,7 +23,7 @@ import com.gigaspaces.persistency.qa.helper.MongoDBController;
 	//	SpaceMongoInitalLoadTest.class,
         //FAILOVER TESTS
     //  MongoSpaceFailoverTest.class,
-    //  MongoMirrorFailoverTest.class
+         MongoMirrorFailoverTest.class
 })
 public class MongoSystemTestSuite {
 
