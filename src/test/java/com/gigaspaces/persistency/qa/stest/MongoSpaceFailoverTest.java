@@ -29,7 +29,7 @@ public class MongoSpaceFailoverTest extends AbstractSystemTestUnit {
 
         //failover
         say("Failover space ... restarting");
-        restartPuGscs(testPU);
+        restartPuGscs(testPU,true);
 
         List<IssuePojo> pojos = Arrays.asList(gigaSpace.readMultiple(
                 new IssuePojo(), 20));

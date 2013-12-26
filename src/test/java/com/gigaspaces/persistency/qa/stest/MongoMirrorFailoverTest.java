@@ -37,7 +37,7 @@ public class MongoMirrorFailoverTest extends AbstractSystemTestUnit {
         t.start();
         // shut down mirror when filling space
         say("Failover mirror ... restarting");
-        restartPuGscs(mirrorServicePU);
+        restartPuGscs(mirrorServicePU,false);
         // wait till thread finished writing to space
         try {
             t.join();

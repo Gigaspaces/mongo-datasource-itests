@@ -262,10 +262,10 @@ public abstract class AbstractSystemTestUnit
 
     /**
      * restart the gscs which contain pu.
-     * NOTE: only works on 2,1 topology
      * @param pu - the gscs which contain pu will be restarted
+     * @param clustered - if true assumes 2,1 else assumes 1,0
      */
-    protected void restartPuGscs(ProcessingUnit pu){
+    protected void restartPuGscs(ProcessingUnit pu, boolean clustered){
         SpaceInstance[] instances = pu.getSpace().getInstances();
         for (SpaceInstance inst : instances) {
             if (inst.getMode().equals(SpaceMode.PRIMARY) || inst.getMode().equals(SpaceMode.BACKUP)){
@@ -273,8 +273,13 @@ public abstract class AbstractSystemTestUnit
                     inst.getVirtualMachine().getGridServiceContainer().restart();
             }
         }
-        pu.waitFor(2);
-        pu.getSpace().waitFor(1, SpaceMode.PRIMARY);
-        pu.getSpace().waitFor(1, SpaceMode.BACKUP);
+        if (clustered){
+            pu.waitFor(2);
+            pu.getSpace().waitFor(1, SpaceMode.PRIMARY);
+            pu.getSpace().waitFor(1, SpaceMode.BACKUP);
+        }
+        else {
+            pu.waitFor(1);
+        }
     }
 }
