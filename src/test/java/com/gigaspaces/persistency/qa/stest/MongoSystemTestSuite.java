@@ -21,9 +21,9 @@ import com.gigaspaces.persistency.qa.helper.MongoDBController;
 		DocumentPojoWithDynamicPropsMongoSpaceTest.class,
 	//	SpaceMongoLoadTest.class,
 	//	SpaceMongoInitalLoadTest.class,
-        //FAILOVER TESTS
-    //  MongoSpaceFailoverTest.class,
-         MongoMirrorFailoverTest.class
+        //      SpaceFailover fails - GS-11551
+    	//      MongoSpaceFailoverTest.class,
+         	MongoMirrorFailoverTest.class
 })
 public class MongoSystemTestSuite {
 
