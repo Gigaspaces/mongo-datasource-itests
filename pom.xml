@@ -68,7 +68,7 @@
 								<artifactItem>
 									<groupId>com.gigaspaces</groupId>
 									<artifactId>mongo-datasource</artifactId>
-									<version>0.0.1-SNAPSHOT</version>
+									<version>9.7.0-SNAPSHOT</version>
 									<type>${project.packaging}</type>
 								</artifactItem>
 								<artifactItem>
