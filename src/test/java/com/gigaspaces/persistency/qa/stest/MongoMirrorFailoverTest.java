@@ -1,6 +1,6 @@
 package com.gigaspaces.persistency.qa.stest;
 
-import com.gigaspaces.persistency.qa.model.IssuePojo;
+import com.gigaspaces.persistency.qa.model.IssueDocument;
 import com.gigaspaces.persistency.qa.utils.AssertUtils;
 import org.junit.Assert;
 
@@ -15,10 +15,12 @@ import java.util.List;
  */
 public class MongoMirrorFailoverTest extends AbstractSystemTestUnit {
 
-    List<IssuePojo> issuePojos = new ArrayList<IssuePojo>();
+    List<IssueDocument> issueDocs = new ArrayList<IssueDocument>();
 
     @Override
     public void test() {
+
+        gigaSpace.getTypeManager().registerTypeDescriptor(IssueDocument.getTypeDescriptor());
         say("Mongo Mirror Failover test started ...");
         Thread t = new Thread() {
             public void run() {
@@ -26,9 +28,12 @@ public class MongoMirrorFailoverTest extends AbstractSystemTestUnit {
                     //sleep in order to let mirror get restarted first
                     Thread.sleep(1000);
                     for (int i = 0; i < 10; i++) {
-                        issuePojos.add(new IssuePojo(i + 1, "dank" + (i + 1)));
+                        IssueDocument doc = new IssueDocument ();
+                        doc.setKey(i+1);
+                        doc.setVotes(i+1);
+                        issueDocs.add(doc);
                     }
-                    gigaSpace.writeMultiple(issuePojos.toArray(new IssuePojo[] {}));
+                    gigaSpace.writeMultiple(issueDocs.toArray(new IssueDocument[] {}));
                 } catch (InterruptedException e) {
                     Assert.fail("fillSpace wait interrupted!");
                 }
@@ -45,17 +50,17 @@ public class MongoMirrorFailoverTest extends AbstractSystemTestUnit {
 
         waitForEmptyReplicationBacklog(gigaSpace);
 
-        List<IssuePojo> pojos = Arrays.asList(gigaSpace.readMultiple(
-                new IssuePojo(), 20));
+        List<IssueDocument> docs = Arrays.asList(gigaSpace.readMultiple(
+                new IssueDocument(), 20));
 
-        Collections.sort(pojos);
+        Collections.sort(docs);
 
-        junit.framework.Assert.assertEquals("size is not equals", issuePojos.size(),
-                pojos.size());
+        junit.framework.Assert.assertEquals("size is not equals", issueDocs.size(),
+                docs.size());
 
-        AssertUtils.assertEquivalent("", issuePojos, pojos);
+        AssertUtils.assertEquivalent("", issueDocs, docs);
 
-        assertMongoEqualsSpace(issuePojos);
+        assertMongoEqualsSpace(issueDocs);
 
         say("Mongo Mirror Failover test passed!");
     }
@@ -65,12 +70,12 @@ public class MongoMirrorFailoverTest extends AbstractSystemTestUnit {
         return "/lru-0.0.1-SNAPSHOT.jar";
     }
 
-    private void assertMongoEqualsSpace(List<IssuePojo> beforeClear) {
+    private void assertMongoEqualsSpace(List<IssueDocument> beforeClear) {
         clearMemory(gigaSpace);
         junit.framework.Assert.assertEquals(0, gigaSpace.count(null));
-        List<IssuePojo> pojos = Arrays.asList(gigaSpace.readMultiple(
-                new IssuePojo(), 20));
-        AssertUtils.assertEquivalent("space is not equivalent to mongo", beforeClear, pojos);
+        List<IssueDocument> docs = Arrays.asList(gigaSpace.readMultiple(
+                new IssueDocument(), 20));
+        AssertUtils.assertEquivalent("space is not equivalent to mongo", beforeClear, docs);
 
     }
 }

@@ -1,9 +1,14 @@
 package com.gigaspaces.persistency.qa.stest;
 
-import java.io.File;
-import java.util.concurrent.TimeUnit;
-
+import com.gigaspaces.client.ClearModifiers;
+import com.gigaspaces.client.CountModifiers;
 import com.gigaspaces.cluster.activeelection.SpaceMode;
+import com.gigaspaces.persistency.qa.utils.IRepetitiveRunnable;
+import com.j_spaces.core.IJSpace;
+import com.j_spaces.core.admin.StatisticsAdmin;
+import com.j_spaces.core.filters.ReplicationStatistics.ChannelState;
+import com.j_spaces.core.filters.ReplicationStatistics.OutgoingChannel;
+import com.j_spaces.core.filters.ReplicationStatistics.OutgoingReplication;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.After;
 import org.junit.Assert;
@@ -13,17 +18,11 @@ import org.openspaces.admin.Admin;
 import org.openspaces.admin.AdminFactory;
 import org.openspaces.admin.pu.ProcessingUnit;
 import org.openspaces.admin.pu.ProcessingUnitDeployment;
-import org.openspaces.core.GigaSpace;
 import org.openspaces.admin.space.SpaceInstance;
+import org.openspaces.core.GigaSpace;
 
-import com.gigaspaces.client.ClearModifiers;
-import com.gigaspaces.client.CountModifiers;
-import com.gigaspaces.persistency.qa.utils.IRepetitiveRunnable;
-import com.j_spaces.core.IJSpace;
-import com.j_spaces.core.admin.StatisticsAdmin;
-import com.j_spaces.core.filters.ReplicationStatistics.ChannelState;
-import com.j_spaces.core.filters.ReplicationStatistics.OutgoingChannel;
-import com.j_spaces.core.filters.ReplicationStatistics.OutgoingReplication;
+import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 
 public abstract class AbstractSystemTestUnit

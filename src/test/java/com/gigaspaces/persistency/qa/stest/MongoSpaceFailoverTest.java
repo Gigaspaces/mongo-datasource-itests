@@ -1,6 +1,6 @@
 package com.gigaspaces.persistency.qa.stest;
 
-import com.gigaspaces.persistency.qa.model.IssuePojo;
+import com.gigaspaces.persistency.qa.model.IssueDocument;
 import com.gigaspaces.persistency.qa.utils.AssertUtils;
 import junit.framework.Assert;
 
@@ -17,14 +17,20 @@ public class MongoSpaceFailoverTest extends AbstractSystemTestUnit {
 
     @Override
     public void test() {
+
+        gigaSpace.getTypeManager().registerTypeDescriptor(IssueDocument.getTypeDescriptor());
+
         say("Mongo Space Failover test started ...");
-        List<IssuePojo> issuePojos = new ArrayList<IssuePojo>();
+        List<IssueDocument> issueDocuments = new ArrayList<IssueDocument>();
 
         for (int i = 0; i < 10; i++) {
-            issuePojos.add(new IssuePojo(i + 1, "dank" + (i + 1)));
+            IssueDocument doc = new IssueDocument ();
+            doc.setKey(i+1);
+            doc.setVotes(i+1);
+            issueDocuments.add(doc);
         }
 
-        gigaSpace.writeMultiple(issuePojos.toArray(new IssuePojo[] {}));
+        gigaSpace.writeMultiple(issueDocuments.toArray(new IssueDocument[] {}));
 
         waitForEmptyReplicationBacklog(gigaSpace);
 
@@ -32,26 +38,26 @@ public class MongoSpaceFailoverTest extends AbstractSystemTestUnit {
         say("Failover space ... restarting");
         restartPuGscs(testPU,true);
 
-        List<IssuePojo> pojos = Arrays.asList(gigaSpace.readMultiple(
-                new IssuePojo(), 20));
+        List<IssueDocument> docs = Arrays.asList(gigaSpace.readMultiple(
+                new IssueDocument(), 20));
 
-        Collections.sort(pojos);
+        Collections.sort(docs);
 
-        junit.framework.Assert.assertEquals("size is not equals", issuePojos.size(),
-                pojos.size());
+        junit.framework.Assert.assertEquals("size is not equals", issueDocuments.size(),
+                docs.size());
 
-        AssertUtils.assertEquivalent("", issuePojos, pojos);
+        AssertUtils.assertEquivalent("", issueDocuments, docs);
 
-        assertMongoEqualsSpace(issuePojos);
+        assertMongoEqualsSpace(issueDocuments);
 
         say("Mongo Space Failover test passed!");
     }
 
-    private void assertMongoEqualsSpace(List<IssuePojo> beforeClear) {
+    private void assertMongoEqualsSpace(List<IssueDocument> beforeClear) {
         clearMemory(gigaSpace);
         Assert.assertEquals(0,gigaSpace.count(null));
-        List<IssuePojo> pojos = Arrays.asList(gigaSpace.readMultiple(
-                new IssuePojo(), 20));
+        List<IssueDocument> pojos = Arrays.asList(gigaSpace.readMultiple(
+                new IssueDocument(), 20));
         AssertUtils.assertEquivalent("space is not equivalent to mongo", beforeClear, pojos);
 
     }
