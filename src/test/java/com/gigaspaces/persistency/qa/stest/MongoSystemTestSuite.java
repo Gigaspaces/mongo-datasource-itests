@@ -17,6 +17,7 @@ import com.gigaspaces.persistency.qa.helper.MongoDBController;
 		BasicMongoSpaceLRUTest.class,
 		BasicMongoSpaceChangeTest.class,
 		BasicMongoSpacePartialUpdateTest.class,
+        BasicMongoInnerClassTest.class,
 		SmallTypeHierarcyMongoSpaceTest.class,
 		DocumentPojoWithDynamicPropsMongoSpaceTest.class,
 	//	SpaceMongoLoadTest.class,
