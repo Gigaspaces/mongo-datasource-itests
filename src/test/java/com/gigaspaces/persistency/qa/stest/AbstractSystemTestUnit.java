@@ -78,12 +78,11 @@ public abstract class AbstractSystemTestUnit
     {
 
         waitForEmptyReplicationBacklog(gigaSpace);
+        if (mirrorServicePU != null)
+            mirrorServicePU.undeployAndWait();
 
         if (testPU != null)
             testPU.undeployAndWait();
-
-        if (mirrorServicePU != null)
-            mirrorServicePU.undeployAndWait();
         
         if(admin != null)
             admin.close();
@@ -237,7 +236,15 @@ public abstract class AbstractSystemTestUnit
     protected void repeat(IRepetitiveRunnable iRepetitiveRunnable,
             long repeateInterval)
     {
-        while (true)
+        repeat(iRepetitiveRunnable,repeateInterval,5);
+    }
+
+    protected void repeat(IRepetitiveRunnable iRepetitiveRunnable,
+                          long repeateInterval,int timesToRepeat)
+    {
+        int leftToRepeat = timesToRepeat;
+        boolean needToRepeat = true;
+        while (needToRepeat)
         {
             try
             {
@@ -251,9 +258,15 @@ public abstract class AbstractSystemTestUnit
                 try
                 {
                     Thread.sleep(repeateInterval);
+                    leftToRepeat--;
+                    if (leftToRepeat == 0)
+                        needToRepeat = false;
                 }
                 catch (InterruptedException e1)
                 {
+                    leftToRepeat--;
+                    if (leftToRepeat == 0)
+                        needToRepeat = false;
                 }
             }
         }
