@@ -13,11 +13,52 @@ import java.util.List;
  * Date: 01/01/14
  */
 public class BasicMongoInnerClassTest extends AbstractSystemTestUnit {
+
+    static class InnerPojo implements Comparable<InnerPojo> {
+
+        public InnerPojo() {}
+
+        private Integer _id;
+
+        @SpaceId(autoGenerate = false)
+        public Integer getId()
+        {
+            return _id;
+        }
+
+        public void setId(Integer id)
+        {
+            this._id = id;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            InnerPojo innerPojo = (InnerPojo) o;
+
+            if (_id != null ? !_id.equals(innerPojo._id) : innerPojo._id != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            return _id != null ? _id.hashCode() : 0;
+        }
+
+        @Override
+        public int compareTo(InnerPojo o) {
+            return o.getId().compareTo(getId());
+        }
+    }
+
     @Override
     public void test() {
         say("Basic Mongo Inner Class Test Started ...");
         List<InnerPojo> pojos = new ArrayList<InnerPojo>();
-        for (int i = 0 ; i<10 ; i++) {
+        for (int i = 0 ; i<10 ; i++){
             InnerPojo pojo = new InnerPojo();
             pojo.setId(i+1);
             pojos.add(pojo);
@@ -53,38 +94,5 @@ public class BasicMongoInnerClassTest extends AbstractSystemTestUnit {
         return "/lru-0.0.1-SNAPSHOT.jar";
     }
 
-    public static class InnerPojo {
 
-        public InnerPojo() {}
-
-        private Integer _id;
-
-        @SpaceId(autoGenerate = false)
-        public Integer getId()
-        {
-            return _id;
-        }
-
-        public void setId(Integer id)
-        {
-            this._id = id;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            InnerPojo innerPojo = (InnerPojo) o;
-
-            if (_id != null ? !_id.equals(innerPojo._id) : innerPojo._id != null) return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            return _id != null ? _id.hashCode() : 0;
-        }
-    }
 }

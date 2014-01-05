@@ -23,7 +23,10 @@ import com.gigaspaces.persistency.qa.helper.MongoDBController;
 	//	SpaceMongoLoadTest.class,
 	    SpaceMongoInitalLoadTest.class,
     	MongoSpaceFailoverTest.class,
-        MongoMirrorFailoverTest.class
+        MongoMirrorFailoverTest.class,
+        ComplexObjectMongoTest.class,
+        //ComplexPojoWithDocumentMongoTest fails ClassCastException
+        ComplexPojoWithDocumentMongoTest.class
 })
 public class MongoSystemTestSuite {
 
