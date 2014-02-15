@@ -9,8 +9,6 @@ import org.junit.runners.Suite.SuiteClasses;
 import com.gigaspaces.persistency.qa.helper.GSAgentController;
 import com.gigaspaces.persistency.qa.helper.MongoDBController;
 
-
-
 @RunWith(Suite.class)
 @SuiteClasses(value = {
 		BasicMongoSpaceAllInCacheTest.class,
@@ -22,7 +20,7 @@ import com.gigaspaces.persistency.qa.helper.MongoDBController;
 		DocumentPojoWithDynamicPropsMongoSpaceTest.class,
 	//	SpaceMongoLoadTest.class,
 	    SpaceMongoInitalLoadTest.class,
-    	MongoSpaceFailoverTest.class,
+    	MongoSpaceFailoverTest.class, 
         MongoMirrorFailoverTest.class,
         ComplexObjectMongoTest.class
         //ComplexPojoWithDocumentMongoTest fails ClassCastException - GS-11561

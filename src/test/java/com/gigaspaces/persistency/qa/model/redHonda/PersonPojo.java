@@ -29,33 +29,27 @@ public class PersonPojo implements Person, Serializable,Comparable<PersonPojo> {
         this._cars = cars;
     }
 
-    @Override
     @SpaceId
     public Integer getId() {
         return _id;
     }
 
-    @Override
     public void setId(Integer id) {
        _id = id;
     }
 
-    @Override
     public String getName() {
         return _name;
     }
 
-    @Override
     public void setName(String name) {
         _name = name;
     }
 
-    @Override
     public Collection<Car> getCars() {
         return _cars;
     }
 
-    @Override
     public void setCars(Collection<Car> cars) {
        this._cars = cars;
     }
@@ -82,7 +76,6 @@ public class PersonPojo implements Person, Serializable,Comparable<PersonPojo> {
         return result;
     }
 
-    @Override
     public int compareTo(PersonPojo o) {
         return getId().compareTo(o.getId());
     }

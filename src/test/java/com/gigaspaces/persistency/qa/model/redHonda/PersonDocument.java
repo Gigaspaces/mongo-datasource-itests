@@ -25,17 +25,14 @@ public class PersonDocument extends SpaceDocument implements Person,Serializable
                 .create();
     }
 
-    @Override
     public Integer getId() {
         return getProperty(_id);
     }
 
-    @Override
     public void setId(Integer id) {
        setProperty(_id,id);
     }
 
-    @Override
     public String getName() {
         return getProperty(_name);
     }
@@ -44,17 +41,14 @@ public class PersonDocument extends SpaceDocument implements Person,Serializable
         super(PERSON);
     }
 
-    @Override
     public void setName(String name) {
         setProperty(_name,name);
     }
 
-    @Override
     public Collection<Car> getCars() {
         return getProperty(_cars);
     }
 
-    @Override
     public void setCars(Collection<Car> cars) {
         setProperty(_cars,cars);
     }
@@ -100,7 +94,6 @@ public class PersonDocument extends SpaceDocument implements Person,Serializable
         return true;
     }
 
-    @Override
     public int compareTo(PersonDocument o) {
         return getId().compareTo(o.getId());
     }

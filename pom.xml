@@ -17,10 +17,10 @@
 		<module>itests</module>
 	</modules>
 
-    <properties>
-        <xap.home>${env.XAP_HOME}</xap.home>
-        <gsVersion>9.7.0-SNAPSHOT</gsVersion>
-    </properties>
+	<properties>
+		<xap.home>${env.XAP_HOME}</xap.home>
+		<gsVersion>10.0.0-SNAPSHOT</gsVersion>
+	</properties>
 
 	<repositories>
 		<repository>
@@ -28,21 +28,9 @@
 			<name>OpenSpaces</name>
 			<url>http://maven-repository.openspaces.org</url>
 		</repository>
-
-		<repository>
-			<releases>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-				<checksumPolicy>warn</checksumPolicy>
-			</releases>
-			<id>allanbank</id>
-			<name>Allanbank Releases</name>
-			<url>http://www.allanbank.com/repo/</url>
-			<layout>default</layout>
-		</repository>
 	</repositories>
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>com.gigaspaces</groupId>
 			<artifactId>mongo-datasource</artifactId>
@@ -53,7 +41,7 @@
 			<artifactId>tf</artifactId>
 			<version>1.5.0</version>
 		</dependency>
-		
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -83,12 +71,6 @@
 									<type>${project.packaging}</type>
 								</artifactItem>
 								<artifactItem>
-									<groupId>com.allanbank</groupId>
-									<artifactId>mongodb-async-driver</artifactId>
-									<version>1.2.3</version>
-									<type>${project.packaging}</type>
-								</artifactItem>
-								<artifactItem>
 									<groupId>org.mongodb</groupId>
 									<artifactId>mongo-java-driver</artifactId>
 									<version>2.11.2</version>
@@ -111,49 +93,49 @@
 			</plugin>
 
 			<plugin>
-		         <groupId>org.apache.maven.plugins</groupId>
-		         <artifactId>maven-jar-plugin</artifactId>
-		         <version>2.3.1</version>
-		         <configuration>
-		           <outputDirectory>${java.io.tmpdir}/mongodb-system-test-deploy</outputDirectory>
-		         </configuration>
-     	   </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<outputDirectory>${java.io.tmpdir}/mongodb-system-test-deploy</outputDirectory>
+				</configuration>
+			</plugin>
 
 		</plugins>
 	</build>
 
-    <profiles>
-        <!-- This profile should be disabled by default, enable if needed to test specific build
-        and make sure xap.home is pointing at the tested build -->
-        <profile>
-            <id>tgrid-mongo-iTests</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>com.gigaspaces</groupId>
-                    <artifactId>gs-openspaces</artifactId>
-                    <version>${gsVersion}</version>
-                    <scope>system</scope>
-                    <systemPath>${xap.home}/lib/required/gs-openspaces.jar</systemPath>
-                </dependency>
-                <dependency>
-                    <groupId>com.gigaspaces</groupId>
-                    <artifactId>gs-runtime</artifactId>
-                    <version>${gsVersion}</version>
-                    <scope>system</scope>
-                    <systemPath>${xap.home}/lib/required/gs-runtime.jar</systemPath>
-                </dependency>
-                <dependency>
-                    <groupId>com.gigaspaces</groupId>
-                    <artifactId>mongo-datasource</artifactId>
-                    <version>${gsVersion}</version>
-                    <scope>system</scope>
-                    <systemPath>${xap.home}/lib/optional/datasource/mongo/mongo-datasource.jar</systemPath>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
+	<profiles>
+		<!-- This profile should be disabled by default, enable if needed to test 
+			specific build and make sure xap.home is pointing at the tested build -->
+		<profile>
+			<id>tgrid-mongo-iTests</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>com.gigaspaces</groupId>
+					<artifactId>gs-openspaces</artifactId>
+					<version>${gsVersion}</version>
+					<scope>system</scope>
+					<systemPath>${xap.home}/lib/required/gs-openspaces.jar</systemPath>
+				</dependency>
+				<dependency>
+					<groupId>com.gigaspaces</groupId>
+					<artifactId>gs-runtime</artifactId>
+					<version>${gsVersion}</version>
+					<scope>system</scope>
+					<systemPath>${xap.home}/lib/required/gs-runtime.jar</systemPath>
+				</dependency>
+				<dependency>
+					<groupId>com.gigaspaces</groupId>
+					<artifactId>mongo-datasource</artifactId>
+					<version>${gsVersion}</version>
+					<scope>system</scope>
+					<systemPath>${xap.home}/lib/optional/datasource/mongo/mongo-datasource.jar</systemPath>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 
 </project>

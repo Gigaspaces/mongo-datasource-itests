@@ -62,10 +62,10 @@
 		class="com.gigaspaces.persistency.MongoClientConnectorBeanFactory">
 		<property name="db" value="qadb" />
 		<property name="config">
-			<bean class="com.allanbank.mongodb.MongoClientConfiguration">
-				<constructor-arg value="mongodb://localhost:27017/qadb"
-					type="java.lang.String" />
-				<property name="defaultDurability" value="ACK" />
+			<bean class="com.mongodb.MongoClient">
+				<constructor-arg value="localhost" type="java.lang.String" />
+				<constructor-arg value="27017" type="int" />
+				<!--<property name="writeConcern" value="ACKNOWLEDGED" />-->
 			</bean>
 		</property>
 	</bean>
