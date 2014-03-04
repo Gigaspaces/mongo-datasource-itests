@@ -25,6 +25,8 @@ import com.gigaspaces.persistency.qa.helper.MongoDBController;
         ComplexObjectMongoTest.class
         //ComplexPojoWithDocumentMongoTest fails ClassCastException - GS-11561
         //ComplexPojoWithDocumentMongoTest.class
+
+     // MongoLocaleURIPojoTest.class - uncomment this after adding Locale write support in mongoEDS
 })
 public class MongoSystemTestSuite {
 
