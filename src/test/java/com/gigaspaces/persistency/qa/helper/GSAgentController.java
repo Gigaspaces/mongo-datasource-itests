@@ -50,11 +50,12 @@ public class GSAgentController {
 	}
 
 	public void stop() {
-
-		for (GridServiceAgent gsa : admin.getGridServiceAgents()) {
-			gsa.shutdown();
-		}
-
-		GS_AGENT_PROCESS.stop();
+        if (admin != null){
+            for (GridServiceAgent gsa : admin.getGridServiceAgents()) {
+                gsa.shutdown();
+            }
+        }
+        if (GS_AGENT_PROCESS != null)
+		    GS_AGENT_PROCESS.stop();
 	}
 }

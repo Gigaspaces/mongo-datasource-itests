@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
+import junit.framework.Assert;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -41,6 +44,8 @@ public class MongoDBController
     private boolean             isEmbedded;
     private List<Thread>        threads    = new ArrayList<Thread>();
 
+    private static final String WAIT_MONGO_PROCESS_INDICATOR = "waiting for connections on port";
+    protected Semaphore mongoLock = new Semaphore(0);
     public void start(boolean isEmbedded)
     {
 
@@ -109,16 +114,16 @@ public class MongoDBController
             DB adminDB = client.getDB("admin");
 
             CommandResult result = adminDB.command(new BasicDBObject("listShards",
-                                                                     1));
+                    1));
             BasicDBList list = (BasicDBList) result.get("shards");
             if (list.size() == 0)
             {
                 result = adminDB.command(new BasicDBObject("addShard",
-                                                           "127.0.0.1:27019"));
+                        "127.0.0.1:27019"));
                 result = adminDB.command(new BasicDBObject("addShard",
-                                                           "127.0.0.1:27020"));
+                        "127.0.0.1:27020"));
                 result = adminDB.command(new BasicDBObject("enableSharding",
-                                                           QA_DB));
+                        QA_DB));
             }
         }
         catch (UnknownHostException e)
@@ -151,6 +156,17 @@ public class MongoDBController
         args.add("" + port);
 
         configProcess = start(args);
+        waitForMongoToBeIdle();
+
+    }
+
+    private void waitForMongoToBeIdle() {
+        long timeout = 20;
+        boolean success = false;
+        try {
+            success = mongoLock.tryAcquire(timeout, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {}
+        Assert.assertTrue("Mongo process didn't get idle on time, waited for the string:\n"+WAIT_MONGO_PROCESS_INDICATOR,success);
     }
 
     private CommandLineProcess startMongod(String dir, int port)
@@ -163,7 +179,9 @@ public class MongoDBController
         args.add("--port");
         args.add("" + port);
 
-        return start(args);
+        CommandLineProcess mongod = start(args);
+        waitForMongoToBeIdle();
+        return mongod;
     }
 
     private void startMongos(int configPort)
@@ -176,12 +194,13 @@ public class MongoDBController
         args.add("--configdb");
         args.add("127.0.0.1:" + configPort);
         mongosProcess = start(args);
+        waitForMongoToBeIdle();
     }
 
     private CommandLineProcess start(List<String> cmd)
     {
         String wd = FilenameUtils.normalize(System.getenv(MONGO_HOME) + "/bin");
-        CommandLineProcess process = new CommandLineProcess(cmd, wd);
+        CommandLineProcess process = new CommandLineProcess(cmd, wd, WAIT_MONGO_PROCESS_INDICATOR, mongoLock);
 
         Thread thread = new Thread(process);
 
@@ -216,8 +235,8 @@ public class MongoDBController
             MongodStarter starter = MongodStarter.getDefaultInstance();
 
             MongodExecutable mognoExecutable = starter.prepare(new MongodConfig(Version.Main.PRODUCTION,
-                                                                                PORT,
-                                                                                false));
+                    PORT,
+                    false));
 
             embeddedmongodProcess = mognoExecutable.start();
 
@@ -236,14 +255,18 @@ public class MongoDBController
 
     public void stop()
     {
-        if (isEmbedded)
+        if (isEmbedded && embeddedmongodProcess != null)
             embeddedmongodProcess.stop();
         else
         {
-            mongodProcess1.stop();
-            mongodProcess2.stop();
-            configProcess.stop();
-            mongosProcess.stop();
+            if (mongodProcess1 != null)
+                mongodProcess1.stop();
+            if (mongodProcess2 != null)
+                mongodProcess2.stop();
+            if (configProcess != null)
+                configProcess.stop();
+            if (mongosProcess!= null)
+                mongosProcess.stop();
         }
 
     }
@@ -256,7 +279,7 @@ public class MongoDBController
     public void createDb(String dbName)
     {
         client.getDB("admin").command(new BasicDBObject("enableSharding",
-                                                        dbName));
+                dbName));
         client.getDB(dbName);
 
     }
@@ -264,7 +287,7 @@ public class MongoDBController
     public void dropDb(String dbName)
     {
         client.getDB("admin").command(new BasicDBObject("disableSharding",
-                                                        dbName));
+                dbName));
 
         client.dropDatabase(dbName);
 
