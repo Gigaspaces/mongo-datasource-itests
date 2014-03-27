@@ -189,7 +189,7 @@ public abstract class AbstractSystemTestUnit
     protected void clearMemory(final GigaSpace gigaSpace)
     {
 
-        repeat(new IRepetitiveRunnable()
+        Assert.assertTrue("memory is not 0",repeat(new IRepetitiveRunnable()
         {
 
             public void run() throws Exception
@@ -202,7 +202,7 @@ public abstract class AbstractSystemTestUnit
                                                     CountModifiers.MEMORY_ONLY_SEARCH));
             }
         },
-               10 * 1000);
+               10 * 1000));
 
     }
 
@@ -214,7 +214,7 @@ public abstract class AbstractSystemTestUnit
 
     protected void waitForEmptyReplicationBacklog(IJSpace space)
     {
-        repeat(new IRepetitiveRunnable()
+        Assert.assertTrue("replication backlog is not 0",repeat(new IRepetitiveRunnable()
         {
 
             public void run() throws Exception
@@ -230,21 +230,21 @@ public abstract class AbstractSystemTestUnit
 
             }
         },
-               10 * 1000);
+               10 * 1000));
     }
 
-    protected void repeat(IRepetitiveRunnable iRepetitiveRunnable,
+    protected boolean repeat(IRepetitiveRunnable iRepetitiveRunnable,
             long repeateInterval)
     {
-        repeat(iRepetitiveRunnable,repeateInterval,5);
+        return repeat(iRepetitiveRunnable,repeateInterval,4);
     }
 
-    protected void repeat(IRepetitiveRunnable iRepetitiveRunnable,
-                          long repeateInterval,int timesToRepeat)
+    protected boolean repeat(IRepetitiveRunnable iRepetitiveRunnable,
+                          long repeatInterval,int timesToRepeat)
     {
         int leftToRepeat = timesToRepeat;
-        boolean needToRepeat = true;
-        while (needToRepeat)
+        //boolean needToRepeat = true;
+        while (true)
         {
             try
             {
@@ -257,19 +257,20 @@ public abstract class AbstractSystemTestUnit
             {
                 try
                 {
-                    Thread.sleep(repeateInterval);
+                    Thread.sleep(repeatInterval);
                     leftToRepeat--;
                     if (leftToRepeat == 0)
-                        needToRepeat = false;
+                        break;
                 }
                 catch (InterruptedException e1)
                 {
                     leftToRepeat--;
                     if (leftToRepeat == 0)
-                        needToRepeat = false;
+                        break;
                 }
             }
         }
+        return leftToRepeat > 0;
     }
 
     /**
