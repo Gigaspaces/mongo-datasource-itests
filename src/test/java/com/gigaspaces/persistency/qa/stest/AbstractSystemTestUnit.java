@@ -77,7 +77,6 @@ public abstract class AbstractSystemTestUnit
     public void stop()
     {
 
-        waitForEmptyReplicationBacklog(gigaSpace);
         if (mirrorServicePU != null)
             mirrorServicePU.undeployAndWait();
 
