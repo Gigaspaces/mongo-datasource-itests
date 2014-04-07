@@ -22,7 +22,8 @@ import com.gigaspaces.persistency.qa.helper.MongoDBController;
 	    SpaceMongoInitalLoadTest.class,
     	MongoSpaceFailoverTest.class, 
         MongoMirrorFailoverTest.class,
-        ComplexObjectMongoTest.class
+        ComplexObjectMongoTest.class,
+        BasicMongoPojoWithPrimitiveTest.class
         //ComplexPojoWithDocumentMongoTest fails ClassCastException - GS-11561
         //ComplexPojoWithDocumentMongoTest.class
 
