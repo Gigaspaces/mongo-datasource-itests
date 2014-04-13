@@ -17,7 +17,7 @@ public class MongoLocaleURIPojoTest extends AbstractSystemTestUnit {
 
     @Override
     public void test() {
-        say("Mongo Locale URI Pojo Test ...");
+        say("Mongo Locale URI Pojo com.Test ...");
         List<LocaleURIPojo> pojos = new LinkedList<LocaleURIPojo>();
         for (int i = 0; i < NUM_OF_OBJECTS; i++) {
             LocaleURIPojo pojo = new LocaleURIPojo();
@@ -37,7 +37,7 @@ public class MongoLocaleURIPojoTest extends AbstractSystemTestUnit {
         LocaleURIPojo[] readPojos = gigaSpace.readMultiple(new LocaleURIPojo(), 20);
         Assert.assertEquals("Size of read pojos should be "+NUM_OF_OBJECTS,NUM_OF_OBJECTS,readPojos.length);
         assertMongoEqualsSpace(pojos);
-        say("Mongo Locale URI Pojo Test Passed!");
+        say("Mongo Locale URI Pojo com.Test Passed!");
     }
 
     private void assertMongoEqualsSpace(List<LocaleURIPojo> beforeClear) {

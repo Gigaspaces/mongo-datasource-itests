@@ -1,22 +1,5 @@
 package com.gigaspaces.persistency.qa.stest;
 
-import java.sql.SQLTransientConnectionException;
-import java.util.Date;
-import java.util.Random;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import junit.framework.Assert;
-
-import org.openspaces.core.GigaSpace;
-import org.openspaces.core.ReadMultipleException;
-import org.openspaces.core.TakeMultipleException;
-
-
-
-
-
 import com.gigaspaces.client.WriteModifiers;
 import com.gigaspaces.framework.ThreadBarrier;
 import com.gigaspaces.persistency.qa.model.Issue;
@@ -24,6 +7,17 @@ import com.gigaspaces.persistency.qa.model.MongoIssuePojo;
 import com.gigaspaces.persistency.qa.model.Priority;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import junit.framework.Assert;
+import org.openspaces.core.GigaSpace;
+import org.openspaces.core.ReadMultipleException;
+import org.openspaces.core.TakeMultipleException;
+
+import java.sql.SQLTransientConnectionException;
+import java.util.Date;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SpaceMongoLoadTest extends AbstractSystemTestUnit {
 

@@ -55,7 +55,7 @@ public class BasicMongoInnerClassTest extends AbstractSystemTestUnit {
 
     @Override
     public void test() {
-        say("Basic Mongo Inner Class Test Started ...");
+        say("Basic Mongo Inner Class com.Test Started ...");
         List<InnerPojo> pojos = new ArrayList<InnerPojo>();
         for (int i = 0 ; i<10 ; i++){
             InnerPojo pojo = new InnerPojo();
@@ -76,7 +76,7 @@ public class BasicMongoInnerClassTest extends AbstractSystemTestUnit {
 
         assertMongoEqualsSpace(pojos);
 
-        say("Basic Mongo Inner Class Test Passed!");
+        say("Basic Mongo Inner Class com.Test Passed!");
     }
 
     private void assertMongoEqualsSpace(List<InnerPojo> beforeClear) {

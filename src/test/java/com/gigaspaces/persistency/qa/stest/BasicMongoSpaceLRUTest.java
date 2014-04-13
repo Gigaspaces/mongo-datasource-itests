@@ -1,19 +1,14 @@
 package com.gigaspaces.persistency.qa.stest;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
-import com.j_spaces.core.client.SQLQuery;
-import org.junit.Assert;
-
-
-
-
-
 import com.gigaspaces.client.ReadByIdsResult;
 import com.gigaspaces.persistency.qa.model.IssuePojo;
 import com.gigaspaces.persistency.qa.utils.AssertUtils;
+import com.j_spaces.core.client.SQLQuery;
+import org.junit.Assert;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class BasicMongoSpaceLRUTest extends AbstractSystemTestUnit {

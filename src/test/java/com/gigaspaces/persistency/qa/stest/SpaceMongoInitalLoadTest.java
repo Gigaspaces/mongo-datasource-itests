@@ -1,19 +1,21 @@
 package com.gigaspaces.persistency.qa.stest;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import junit.framework.Assert;
-
+import com.gigaspaces.annotation.pojo.SpaceClass;
+import com.gigaspaces.annotation.pojo.SpaceId;
 import com.gigaspaces.client.ReadModifiers;
 import com.gigaspaces.client.WriteModifiers;
 import com.gigaspaces.framework.ThreadBarrier;
 import com.gigaspaces.persistency.qa.model.Issue;
 import com.gigaspaces.persistency.qa.model.MongoIssuePojo;
+import com.gigaspaces.persistency.qa.model.Pojo;
 import com.gigaspaces.persistency.qa.model.Priority;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import junit.framework.Assert;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SpaceMongoInitalLoadTest extends AbstractSystemTestUnit {
 	@SuppressWarnings("unchecked")
@@ -143,6 +145,9 @@ public class SpaceMongoInitalLoadTest extends AbstractSystemTestUnit {
 					}
 					gigaSpace.writeMultiple(toWrite,
 							WriteModifiers.MEMORY_ONLY_SEARCH);
+//                    Pojo<Double> pojo = new Pojo<Double>(0);
+//                    pojo.setNum(2.0);
+//                    gigaSpace.write(pojo);
 				}
 				barrier.await();
 			} catch (Exception e) {
@@ -150,5 +155,6 @@ public class SpaceMongoInitalLoadTest extends AbstractSystemTestUnit {
 			}
 		}
 	}
+
 
 }

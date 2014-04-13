@@ -19,14 +19,14 @@ public class ComplexPojoWithDocumentMongoTest extends AbstractSystemTestUnit  {
     @Override
     public void test() {
 
-        say("Complex Pojo With Document Mongo Test ...");
+        say("Complex Pojo With Document Mongo com.Test ...");
         List<ComplexPojo> complexPojos = new ArrayList<ComplexPojo>();
 
         for (int i = 0; i < 10; i++) {
             ComplexPojo complex = new ComplexPojo ();
             complex.setId(i+1);
             complex.setName(""+i);
-            IssueDocument doc = new IssueDocument ();
+            IssueDocument doc = new IssueDocument();
             doc.setKey(i+1);
             doc.setVotes(i + 1);
             complex.setDocument(doc);
@@ -53,7 +53,7 @@ public class ComplexPojoWithDocumentMongoTest extends AbstractSystemTestUnit  {
 
         assertMongoEqualsSpace(complexPojos);
 
-        say("Complex Pojo With Document Mongo Test Passed!");
+        say("Complex Pojo With Document Mongo com.Test Passed!");
     }
 
     @Override

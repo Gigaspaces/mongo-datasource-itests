@@ -1,13 +1,12 @@
 package com.gigaspaces.persistency.qa.stest;
 
+import com.gigaspaces.persistency.qa.helper.GSAgentController;
+import com.gigaspaces.persistency.qa.helper.MongoDBController;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
-
-import com.gigaspaces.persistency.qa.helper.GSAgentController;
-import com.gigaspaces.persistency.qa.helper.MongoDBController;
 
 @RunWith(Suite.class)
 @SuiteClasses(value = {
@@ -19,14 +18,12 @@ import com.gigaspaces.persistency.qa.helper.MongoDBController;
 		SmallTypeHierarcyMongoSpaceTest.class,
 		DocumentPojoWithDynamicPropsMongoSpaceTest.class,
 	//	SpaceMongoLoadTest.class,
-	    SpaceMongoInitalLoadTest.class,
-    	MongoSpaceFailoverTest.class, 
+//	    SpaceMongoInitalLoadTest.class,
+    	MongoSpaceFailoverTest.class,
         MongoMirrorFailoverTest.class,
-        ComplexObjectMongoTest.class
-        //ComplexPojoWithDocumentMongoTest fails ClassCastException - GS-11561
-        //ComplexPojoWithDocumentMongoTest.class
-
-     // MongoLocaleURIPojoTest.class - uncomment this after adding Locale write support in mongoEDS
+        ComplexObjectMongoTest.class,
+        ComplexPojoWithDocumentMongoTest.class,
+        MongoLocaleURIPojoTest.class
 })
 public class MongoSystemTestSuite {
 

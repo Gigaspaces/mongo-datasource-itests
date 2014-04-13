@@ -25,7 +25,7 @@ public class ComplexObjectMongoTest extends AbstractSystemTestUnit {
 
     @Override
     public void test() {
-        say("Complex Object Mongo Test Started ...");
+        say("Complex Object Mongo com.Test Started ...");
         Collection<Person> expected = new ArrayList<Person>();
         boolean inserted;
 
@@ -59,7 +59,7 @@ public class ComplexObjectMongoTest extends AbstractSystemTestUnit {
 
         assertMongoEqualsSpace(beforeClear);
 
-        say("Complex Object Mongo Test Passed!");
+        say("Complex Object Mongo com.Test Passed!");
     }
 
     @Override

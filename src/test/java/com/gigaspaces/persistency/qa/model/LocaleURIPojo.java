@@ -69,4 +69,26 @@ public class LocaleURIPojo implements Comparable<LocaleURIPojo> {
     public void setUri(URI uri) {
         this.uri = uri;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LocaleURIPojo that = (LocaleURIPojo) o;
+
+        if (!handle.equals(that.handle)) return false;
+        if (!locale.equals(that.locale)) return false;
+        if (!uri.equals(that.uri)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = locale.hashCode();
+        result = 31 * result + uri.hashCode();
+        result = 31 * result + handle.hashCode();
+        return result;
+    }
 }

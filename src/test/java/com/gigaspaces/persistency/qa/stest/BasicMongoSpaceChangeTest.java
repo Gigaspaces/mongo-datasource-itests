@@ -1,17 +1,13 @@
 package com.gigaspaces.persistency.qa.stest;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-
-
-
-
-
 import com.gigaspaces.client.ChangeSet;
 import com.gigaspaces.persistency.qa.model.IssuePojo;
 import com.gigaspaces.persistency.qa.model.Priority;
 import com.gigaspaces.persistency.qa.utils.AssertUtils;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class BasicMongoSpaceChangeTest extends AbstractSystemTestUnit {
 
