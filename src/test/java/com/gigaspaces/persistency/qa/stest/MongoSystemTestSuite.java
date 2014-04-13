@@ -23,7 +23,8 @@ import org.junit.runners.Suite.SuiteClasses;
         MongoMirrorFailoverTest.class,
         ComplexObjectMongoTest.class,
         ComplexPojoWithDocumentMongoTest.class,
-        MongoLocaleURIPojoTest.class
+        MongoLocaleURIPojoTest.class,
+        BasicMongoPojoWithPrimitiveTest.class
 })
 public class MongoSystemTestSuite {
 
