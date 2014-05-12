@@ -1,13 +1,10 @@
 package com.gigaspaces.persistency.qa.stest;
 
-import com.gigaspaces.annotation.pojo.SpaceClass;
-import com.gigaspaces.annotation.pojo.SpaceId;
 import com.gigaspaces.client.ReadModifiers;
 import com.gigaspaces.client.WriteModifiers;
 import com.gigaspaces.framework.ThreadBarrier;
 import com.gigaspaces.persistency.qa.model.Issue;
 import com.gigaspaces.persistency.qa.model.MongoIssuePojo;
-import com.gigaspaces.persistency.qa.model.Pojo;
 import com.gigaspaces.persistency.qa.model.Priority;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
