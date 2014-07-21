@@ -1,5 +1,6 @@
 package com.gigaspaces.persistency.qa.stest;
 
+import com.gigaspaces.client.CountModifiers;
 import com.gigaspaces.client.ReadModifiers;
 import com.gigaspaces.client.WriteModifiers;
 import com.gigaspaces.framework.ThreadBarrier;
@@ -9,7 +10,9 @@ import com.gigaspaces.persistency.qa.model.Priority;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import junit.framework.Assert;
+import org.openspaces.admin.space.SpacePartition;
 
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -30,13 +33,30 @@ public class SpaceMongoInitalLoadTest extends AbstractSystemTestUnit {
 	@Override
 	public void test() {
 		try {
-            fillClusterData();
-            teardownCluster();
-            initConfigurersAndStartSpaces();
-            assertValidInitialDataLoad();
+			fillClusterData();
+			Map<Integer,HashSet<MongoIssuePojo>> objectsByPartition = getObjectsByPartition();
+			teardownCluster();
+			initConfigurersAndStartSpaces();
+			assertValidInitialDataLoad(objectsByPartition);
 		} catch (Exception e) {
 			throw new AssertionError(e);
 		}
+	}
+
+	/**
+	 * @return a mapping between a partition-id and all the objects on this partition
+	 */
+	private Map<Integer, HashSet<MongoIssuePojo>> getObjectsByPartition() {
+		Map<Integer, HashSet<MongoIssuePojo>> res = new HashMap<Integer, HashSet<MongoIssuePojo>>();
+		SpacePartition[] spacePartitions = testPU.getSpace().getPartitions();
+
+		for (SpacePartition partition: spacePartitions){
+			Integer partitionID = partition.getPartitionId();
+			MongoIssuePojo[] issues = partition.getPrimary().getGigaSpace().readMultiple(new MongoIssuePojo(),
+					Integer.MAX_VALUE, ReadModifiers.MEMORY_ONLY_SEARCH);
+			res.put(partitionID, new HashSet<MongoIssuePojo>(Arrays.asList(issues)));
+		}
+		return res;
 	}
 
 	@Override
@@ -49,13 +69,21 @@ public class SpaceMongoInitalLoadTest extends AbstractSystemTestUnit {
 		return "/initial-load-0.0.1-SNAPSHOT.jar";
 	}
 
-	private void assertValidInitialDataLoad() {
-		MongoIssuePojo[] issues = gigaSpace.readMultiple(new MongoIssuePojo(),
-				Integer.MAX_VALUE, ReadModifiers.MEMORY_ONLY_SEARCH);
-		Assert.assertEquals("initial data load count", writes.size(),
-				issues.length);
-		for (MongoIssuePojo issue : issues) {
-			checkVaildIssue(issue);
+	private void assertValidInitialDataLoad(Map<Integer, HashSet<MongoIssuePojo>> objectsByPartition) {
+		Assert.assertEquals("Overall number of objects doesn't match",writes.size(),gigaSpace.count(new MongoIssuePojo(), CountModifiers.MEMORY_ONLY_SEARCH));
+
+		SpacePartition[] spacePartitions = testPU.getSpace().getPartitions();
+
+		for (SpacePartition partition: spacePartitions){
+			int partitionID = partition.getPartitionId();
+			MongoIssuePojo[] issues = partition.getPrimary().getGigaSpace().readMultiple(new MongoIssuePojo(),
+					Integer.MAX_VALUE, ReadModifiers.MEMORY_ONLY_SEARCH);
+			for (MongoIssuePojo issue : issues) {
+				checkVaildIssue(issue);
+			}
+			HashSet<MongoIssuePojo> actualSet = new HashSet<MongoIssuePojo>(Arrays.asList(issues));
+			Assert.assertEquals("Objects after initial load doesn't match the objects before initial load on partition " + partitionID,
+					objectsByPartition.get(partitionID),actualSet);
 		}
 	}
 
@@ -80,7 +108,7 @@ public class SpaceMongoInitalLoadTest extends AbstractSystemTestUnit {
 		say("starting workers");
 		startWorkers();
 
-		say("sleep 30 sec");
+		say("sleep 10 sec");
 		Thread.sleep(10 * 1000);
 
 		say("stopping, written so far: " + writes.size());
