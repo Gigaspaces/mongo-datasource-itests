@@ -36,6 +36,19 @@
             <artifactId>backport-util-concurrent-java12</artifactId>
             <version>3.1</version>
         </dependency>
+        
+        <dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+		<version>r08</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>de.flapdoodle.embed</groupId>
+		<artifactId>de.flapdoodle.embed.mongo</artifactId>
+		<version>1.33</version>
+	</dependency>
+
     </dependencies>
 
 	<build>
