@@ -19,7 +19,7 @@
 
 	<properties>
 		<xap.home>${env.XAP_HOME}</xap.home>
-		<gsVersion>10.1.0-SNAPSHOT</gsVersion>
+		<gsVersion>10.0.1-11800-RELEASE</gsVersion>
 	</properties>
 
 	<repositories>
@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>com.gigaspaces.quality</groupId>
 			<artifactId>tf</artifactId>
-			<version>1.6.1</version>
+			<version>1.5.0</version>
 		</dependency>
 
 	</dependencies>
