@@ -22,7 +22,6 @@ import org.junit.runners.Suite.SuiteClasses;
     	MongoSpaceFailoverTest.class,
         MongoMirrorFailoverTest.class,
         ComplexObjectMongoTest.class,
-        ComplexPojoWithDocumentMongoTest.class,
         MongoLocaleURIPojoTest.class,
         BasicMongoPojoWithPrimitiveTest.class
 })
