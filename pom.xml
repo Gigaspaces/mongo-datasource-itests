@@ -19,7 +19,7 @@
 
 	<properties>
 		<xap.home>${env.XAP_HOME}</xap.home>
-		<gsVersion>10.1.0-SNAPSHOT</gsVersion>
+		<gsVersion>10.2.0-SNAPSHOT</gsVersion>
 	</properties>
 
 	<repositories>
