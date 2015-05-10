@@ -3,12 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.gigaspaces.mongo-datasource-itests</groupId>
     <artifactId>initial-load</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
 
     <parent>
         <groupId>com.gigaspaces</groupId>
         <artifactId>mongo-datasource-itests</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>10.2.0-SNAPSHOT</version>
+        <relativePath>../../mongo-datasource-itests/pom.xml</relativePath>
     </parent>
 
     <build>
