@@ -37,7 +37,7 @@
             <artifactId>backport-util-concurrent-java12</artifactId>
             <version>3.1</version>
         </dependency>
-        
+
         <dependency>
 		<groupId>com.google.guava</groupId>
 		<artifactId>guava</artifactId>
@@ -66,10 +66,10 @@
     </dependencies>
 
 	<build>
-		<testSourceDirectory>../src/test/java</testSourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<testResources>
 			<testResource>
-				<directory>../src/test/resources</directory>
+				<directory>src/test/resources</directory>
 			</testResource>
 		</testResources>
 
@@ -108,10 +108,8 @@
 				<configuration>
 					<testFailureIgnore>true</testFailureIgnore>
 					<argLine>-Xmx256m -Xms256m</argLine>
-					<includes>
-						<include>**/MongoSystemTestSuite.java</include>
-					</includes>
 					<excludes>
+						<exclude>**/MongoSystemTestSuite.java</exclude>
 						<exclude>**/*Abstract*</exclude>
 						<exclude>**/*Abstract*</exclude>
 					</excludes>
