@@ -96,29 +96,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<plugin>
-				<groupId>com.gigaspaces</groupId>
-				<artifactId>newman-test-generator-plugin</artifactId>
-				<version>1.0.0-SNAPSHOT</version>
-				<executions>
-					<execution>
-						<phase>test-compile</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<type>mongodb</type>
-					<outputFile>${project.build.directory}/mongodb-tests.json</outputFile>
-					<includeTests>true</includeTests>
-					<scanner>com.gigaspaces.newman.testgenerator.scanner.JUnitScanner</scanner>
-					<packages>
-						<package>com.gigaspaces.persistency.qa</package>
-					</packages>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
