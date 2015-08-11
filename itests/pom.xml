@@ -1,150 +1,156 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.gigaspaces.mongo-datasource-itests</groupId>
-	<artifactId>itests</artifactId>
-	<packaging>jar</packaging>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.gigaspaces.mongo-datasource-itests</groupId>
+    <artifactId>itests</artifactId>
+    <packaging>jar</packaging>
 
-		<parent>
-			<groupId>com.gigaspaces</groupId>
-			<artifactId>mongo-datasource-itests</artifactId>
-			<version>11.0.0-SNAPSHOT</version>
-			<relativePath>../pom.xml</relativePath>
-		</parent>
+    <parent>
+        <groupId>com.gigaspaces</groupId>
+        <artifactId>mongo-datasource-itests</artifactId>
+        <version>11.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
-        <repositories>
-                <repository>
-                        <id>org.openspaces</id>
-                        <name>OpenSpaces</name>
-                        <url>http://maven-repository.openspaces.org</url>
-                </repository>
-        </repositories>
-        <dependencies>
+    <repositories>
 
-                <dependency>
-                        <groupId>com.gigaspaces</groupId>
-                        <artifactId>mongo-datasource</artifactId>
-                        <version>${gsVersion}</version>
-                </dependency>
-                <dependency>
-                        <groupId>com.gigaspaces.quality</groupId>
-                        <artifactId>tf</artifactId>
-                        <version>1.6.1</version>
-                </dependency>
+        <repository>
+            <id>org.openspaces</id>
+            <name>OpenSpaces</name>
+            <url>http://maven-repository.openspaces.org</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>org.openspaces</id>
+            <url>http://maven-repository.openspaces.org</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <dependencies>
 
-	<dependency>
+        <dependency>
+            <groupId>com.gigaspaces</groupId>
+            <artifactId>mongo-datasource</artifactId>
+            <version>${gsVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gigaspaces.quality</groupId>
+            <artifactId>tf</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>backport-util-concurrent</groupId>
             <artifactId>backport-util-concurrent-java12</artifactId>
             <version>3.1</version>
         </dependency>
 
         <dependency>
-		<groupId>com.google.guava</groupId>
-		<artifactId>guava</artifactId>
-		<version>r08</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>de.flapdoodle.embed</groupId>
-		<artifactId>de.flapdoodle.embed.mongo</artifactId>
-		<version>1.33</version>
-	</dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>r08</version>
+        </dependency>
 
-    	<dependency>
-        	<groupId>org.mongodb</groupId>
-        	<artifactId>mongo-java-driver</artifactId>
-        	<version>2.11.2</version>
-        	<scope>compile</scope>
-    	</dependency>
-    
-    	<dependency>
-		<groupId>com.gigaspaces</groupId>
-		<artifactId>xap-jms</artifactId>
-		<version>${gsVersion}</version>
-	</dependency>
+        <dependency>
+            <groupId>de.flapdoodle.embed</groupId>
+            <artifactId>de.flapdoodle.embed.mongo</artifactId>
+            <version>1.33</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>2.11.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.gigaspaces</groupId>
+            <artifactId>xap-jms</artifactId>
+            <version>${gsVersion}</version>
+        </dependency>
 
     </dependencies>
 
-	<build>
-		<testSourceDirectory>src/test/java</testSourceDirectory>
-		<testResources>
-			<testResource>
-				<directory>src/test/resources</directory>
-			</testResource>
-		</testResources>
+    <build>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
 
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-				<executions>
-					<execution>
-						<id>default-jar</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-						<phase>package</phase>
-					</execution>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
-						</goals>
-						<phase>package</phase>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>com.gigaspaces</groupId>
-				<artifactId>newman-test-generator-plugin</artifactId>
-				<version>1.0.0-SNAPSHOT</version>
-				<executions>
-					<execution>
-						<phase>test-compile</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<type>mongodb</type>
-					<outputFile>${project.build.directory}/mongodb-tests.json</outputFile>
-					<includeTests>true</includeTests>
-					<scanner>com.gigaspaces.newman.testgenerator.scanner.JUnitScanner</scanner>
-					<packages>
-						<package>com.gigaspaces.persistency.qa</package>
-					</packages>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.17</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>test</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<testFailureIgnore>true</testFailureIgnore>
-					<argLine>-Xmx256m -Xms256m</argLine>
-					<excludes>
-						<exclude>**/MongoSystemTestSuite.java</exclude>
-						<exclude>**/*Abstract*</exclude>
-						<exclude>**/*Abstract*</exclude>
-					</excludes>
-					<additionalClasspathElements>
-						<additionalClasspathElement>src/test/resources</additionalClasspathElement>
-					</additionalClasspathElements>
-				</configuration>
-			</plugin>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.gigaspaces</groupId>
+                <artifactId>newman-test-generator-plugin</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <type>mongodb</type>
+                    <outputFile>${project.build.directory}/mongodb-tests.json</outputFile>
+                    <includeTests>true</includeTests>
+                    <scanner>com.gigaspaces.newman.testgenerator.scanner.JUnitScanner</scanner>
+                    <packages>
+                        <package>com.gigaspaces.persistency.qa</package>
+                    </packages>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.17</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <argLine>-Xmx256m -Xms256m</argLine>
+                    <excludes>
+                        <exclude>**/MongoSystemTestSuite.java</exclude>
+                        <exclude>**/*Abstract*</exclude>
+                        <exclude>**/*Abstract*</exclude>
+                    </excludes>
+                    <additionalClasspathElements>
+                        <additionalClasspathElement>src/test/resources</additionalClasspathElement>
+                    </additionalClasspathElements>
+                </configuration>
+            </plugin>
 
 
-
-		</plugins>
-	</build>
+        </plugins>
+    </build>
 
 
 </project>
