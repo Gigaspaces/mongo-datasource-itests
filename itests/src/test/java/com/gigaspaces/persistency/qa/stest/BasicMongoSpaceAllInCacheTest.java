@@ -38,6 +38,6 @@ public class BasicMongoSpaceAllInCacheTest extends AbstractSystemTestUnit {
 
 	@Override
 	protected String getPUJar() {
-		return "/all-in-cache-0.0.1-SNAPSHOT.jar";
+		return "/all-in-cache.jar";
 	}
 }

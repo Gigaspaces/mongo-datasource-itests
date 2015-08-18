@@ -65,6 +65,6 @@ public class BasicMongoSpaceLRUTest extends AbstractSystemTestUnit {
 
 	@Override
 	protected String getPUJar() {
-		return "/lru-0.0.1-SNAPSHOT.jar";
+		return "/lru.jar";
 	}
 }
