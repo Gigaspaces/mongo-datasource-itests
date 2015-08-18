@@ -142,9 +142,6 @@
                         <exclude>**/*Abstract*</exclude>
                         <exclude>**/*Abstract*</exclude>
                     </excludes>
-                    <includes>
-                        <include>**/*Test.java</include>
-                    </includes>
                     <additionalClasspathElements>
                         <additionalClasspathElement>src/test/resources</additionalClasspathElement>
                     </additionalClasspathElements>
