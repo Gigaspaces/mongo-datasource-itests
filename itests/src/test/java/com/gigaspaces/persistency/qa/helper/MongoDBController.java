@@ -1,5 +1,16 @@
 package com.gigaspaces.persistency.qa.helper;
 
+import com.gigaspaces.persistency.qa.utils.CommandLineProcess;
+import com.mongodb.*;
+import de.flapdoodle.embed.mongo.MongodExecutable;
+import de.flapdoodle.embed.mongo.MongodProcess;
+import de.flapdoodle.embed.mongo.MongodStarter;
+import de.flapdoodle.embed.mongo.config.MongodConfig;
+import de.flapdoodle.embed.mongo.distribution.Version;
+import junit.framework.Assert;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -8,28 +19,12 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
-import junit.framework.Assert;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-
-import com.gigaspaces.persistency.qa.utils.CommandLineProcess;
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.CommandResult;
-import com.mongodb.DB;
-import com.mongodb.MongoClient;
-
-import de.flapdoodle.embed.mongo.MongodExecutable;
-import de.flapdoodle.embed.mongo.MongodProcess;
-import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.MongodConfig;
-import de.flapdoodle.embed.mongo.distribution.Version;
-
 
 public class MongoDBController
 {
 
     private static final String MONGO_HOME = "MONGO_HOME";
+    private static final String mongoPath = System.getenv(MONGO_HOME) + "/bin";
     private static final String LOCALHOST  = "localhost";
     private static final String QA_DB      = "qadb";
     private static final int    PORT       = 27017;
@@ -148,7 +143,7 @@ public class MongoDBController
     {
         // mongod --configsvr --dbpath /data/configdb --port 27019
         List<String> args = new ArrayList<String>();
-        args.add("mongod");
+        args.add(mongoPath+"/mongod");
         args.add("--configsvr");
         args.add("--dbpath");
         args.add(quotePathIfNeeded(dir));
@@ -173,7 +168,7 @@ public class MongoDBController
     {
 
         List<String> args = new ArrayList<String>();
-        args.add("mongod");
+        args.add(mongoPath+"/mongod");
         args.add("--dbpath");
         args.add(quotePathIfNeeded(dir));
         args.add("--port");
@@ -190,7 +185,7 @@ public class MongoDBController
         // cfg0.example.net:27019,cfg1.example.net:27019,cfg2.example.net:27019
 
         List<String> args = new ArrayList<String>();
-        args.add("mongos");
+        args.add(mongoPath+"/mongos");
         args.add("--configdb");
         args.add("127.0.0.1:" + configPort);
         mongosProcess = start(args);
@@ -199,7 +194,7 @@ public class MongoDBController
 
     private CommandLineProcess start(List<String> cmd)
     {
-        String wd = FilenameUtils.normalize(System.getenv(MONGO_HOME) + "/bin");
+        String wd = FilenameUtils.normalize(mongoPath);
         CommandLineProcess process = new CommandLineProcess(cmd, wd, WAIT_MONGO_PROCESS_INDICATOR, mongoLock);
 
         Thread thread = new Thread(process);

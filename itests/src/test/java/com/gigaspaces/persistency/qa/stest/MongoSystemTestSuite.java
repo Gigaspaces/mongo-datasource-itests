@@ -4,27 +4,24 @@ import com.gigaspaces.persistency.qa.helper.GSAgentController;
 import com.gigaspaces.persistency.qa.helper.MongoDBController;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
 
-@RunWith(Suite.class)
-@SuiteClasses(value = {
-		BasicMongoSpaceAllInCacheTest.class,
-		BasicMongoSpaceLRUTest.class,
-		BasicMongoSpaceChangeTest.class,
-		BasicMongoSpacePartialUpdateTest.class,
-        BasicMongoInnerClassTest.class,
-		SmallTypeHierarcyMongoSpaceTest.class,
-		DocumentPojoWithDynamicPropsMongoSpaceTest.class,
-	//	SpaceMongoLoadTest.class,
-//	    SpaceMongoInitalLoadTest.class,
-    	MongoSpaceFailoverTest.class,
-        MongoMirrorFailoverTest.class,
-        ComplexObjectMongoTest.class,
-        MongoLocaleURIPojoTest.class,
-        BasicMongoPojoWithPrimitiveTest.class
-})
+//@RunWith(Suite.class)
+//@SuiteClasses(value = {
+//		BasicMongoSpaceAllInCacheTest.class,
+//		BasicMongoSpaceLRUTest.class,
+//		BasicMongoSpaceChangeTest.class,
+//		BasicMongoSpacePartialUpdateTest.class,
+//        BasicMongoInnerClassTest.class,
+//		SmallTypeHierarcyMongoSpaceTest.class,
+//		DocumentPojoWithDynamicPropsMongoSpaceTest.class,
+//	//	SpaceMongoLoadTest.class,
+////	    SpaceMongoInitalLoadTest.class,
+//    	MongoSpaceFailoverTest.class,
+//        MongoMirrorFailoverTest.class,
+//        ComplexObjectMongoTest.class,
+//        MongoLocaleURIPojoTest.class,
+//        BasicMongoPojoWithPrimitiveTest.class
+//})
 public class MongoSystemTestSuite {
 
 	private static final GSAgentController GS_AGENT_CONTROLLER = new GSAgentController();

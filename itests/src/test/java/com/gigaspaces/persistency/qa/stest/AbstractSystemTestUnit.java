@@ -24,6 +24,9 @@ import org.openspaces.core.GigaSpace;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import static com.gigaspaces.persistency.qa.stest.MongoSystemTestSuite.afterSuite;
+import static com.gigaspaces.persistency.qa.stest.MongoSystemTestSuite.beforeSuite;
+
 
 public abstract class AbstractSystemTestUnit
 {
@@ -40,9 +43,12 @@ public abstract class AbstractSystemTestUnit
     @Before
     public void start()
     {
+        beforeSuite();
+
         MongoSystemTestSuite.drop();
 
         startWithoutDropDatabase();
+
     }
 
     protected void startWithoutDropDatabase() throws AssertionError
@@ -83,6 +89,9 @@ public abstract class AbstractSystemTestUnit
         if (testPU != null)
             testPU.undeployAndWait();
         
+
+        afterSuite();
+
         if(admin != null)
             admin.close();
     }
@@ -104,7 +113,7 @@ public abstract class AbstractSystemTestUnit
 
     protected String getMirrorService()
     {
-        return "/mongodb-qa-mirror-0.0.1-SNAPSHOT.jar";
+        return "/mongodb-qa-mirror.jar";
     }
 
     protected abstract String getPUJar();

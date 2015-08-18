@@ -10,8 +10,8 @@
         <version>11.0.0-SNAPSHOT</version>
         <relativePath>../../mongo-datasource-itests/pom.xml</relativePath>
     </parent>
-
     <build>
+        <finalName>initial-load</finalName>
         <extensions>
             <extension>
                 <groupId>org.kuali.maven.wagons</groupId>

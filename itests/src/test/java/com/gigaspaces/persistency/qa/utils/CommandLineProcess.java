@@ -1,5 +1,7 @@
 package com.gigaspaces.persistency.qa.utils;
 
+import org.springframework.util.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -8,10 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
-
-import org.springframework.util.StringUtils;
-
-import com.j_spaces.jms.utils.StringsUtils;
 
 public class CommandLineProcess implements Runnable {
 
@@ -77,6 +75,7 @@ public class CommandLineProcess implements Runnable {
             while ((line = stdInput.readLine()) != null) {
                 if (endWaitingString != null && line.contains(endWaitingString)){
                     lock.release();
+                    break;
                 }
                 System.out.println(line);
             }
