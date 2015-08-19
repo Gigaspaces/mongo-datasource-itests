@@ -43,7 +43,7 @@ public class MongoSystemTestSuite {
 	}
 
 	@AfterClass
-	public static void afterSuite() {
+	public static void stopAgentAndMongo() {
 		stopGSAgent();
 
 		MONGO_DB_CONTROLLER.stop();

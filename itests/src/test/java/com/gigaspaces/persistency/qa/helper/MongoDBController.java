@@ -156,7 +156,7 @@ public class MongoDBController
     }
 
     private void waitForMongoToBeIdle() {
-        long timeout = 240;
+        long timeout = 120;
         boolean success = false;
         try {
             success = mongoLock.tryAcquire(timeout, TimeUnit.SECONDS);

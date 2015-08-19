@@ -125,7 +125,7 @@ public class SpaceMongoInitalLoadTest extends AbstractSystemTestUnit {
 	}
 
 	private void teardownCluster() throws Exception {
-		stop();
+		stop(false);
 	}
 
 	private void startWorkers() {
