@@ -138,7 +138,6 @@
                     <testFailureIgnore>false</testFailureIgnore>
                     <argLine>-Xmx256m -Xms256m</argLine>
                     <excludes>
-                        <exclude>**/MongoSystemTestSuite.java</exclude>
                         <exclude>**/*Abstract*</exclude>
                         <exclude>**/*Abstract*</exclude>
                     </excludes>

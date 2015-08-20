@@ -3,6 +3,8 @@ package com.gigaspaces.persistency.qa.stest;
 import com.gigaspaces.client.ClearModifiers;
 import com.gigaspaces.client.CountModifiers;
 import com.gigaspaces.cluster.activeelection.SpaceMode;
+import com.gigaspaces.persistency.qa.helper.GSAgentController;
+import com.gigaspaces.persistency.qa.helper.MongoDBController;
 import com.gigaspaces.persistency.qa.utils.IRepetitiveRunnable;
 import com.j_spaces.core.IJSpace;
 import com.j_spaces.core.admin.StatisticsAdmin;
@@ -10,10 +12,7 @@ import com.j_spaces.core.filters.ReplicationStatistics.ChannelState;
 import com.j_spaces.core.filters.ReplicationStatistics.OutgoingChannel;
 import com.j_spaces.core.filters.ReplicationStatistics.OutgoingReplication;
 import org.apache.commons.io.FilenameUtils;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.openspaces.admin.Admin;
 import org.openspaces.admin.AdminFactory;
 import org.openspaces.admin.pu.ProcessingUnit;
@@ -24,11 +23,10 @@ import org.openspaces.core.GigaSpace;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import static com.gigaspaces.persistency.qa.stest.MongoSystemTestSuite.beforeSuite;
-import static com.gigaspaces.persistency.qa.stest.MongoSystemTestSuite.stopAgentAndMongo;
-
 
 public abstract class AbstractSystemTestUnit {
+    private final GSAgentController GS_AGENT_CONTROLLER = new GSAgentController();
+    private final MongoDBController MONGO_DB_CONTROLLER = new MongoDBController();
 
     private static final String QA_GROUP = "qa_group";
     private final static String DEPLOY_DIR = "/mongodb-system-test-deploy";
@@ -41,9 +39,9 @@ public abstract class AbstractSystemTestUnit {
 
     @Before
     public void start() {
-        beforeSuite();
+        startAgentAndMongo();
 
-        MongoSystemTestSuite.drop();
+        drop();
 
         startWithoutDropDatabase();
 
@@ -250,6 +248,7 @@ public abstract class AbstractSystemTestUnit {
 
     /**
      * restart the gscs which contain pu.
+     *
      * @param pu        - the gscs which contain pu will be restarted
      * @param clustered - if true assumes 2,1 else assumes 1,0
      */
@@ -268,5 +267,26 @@ public abstract class AbstractSystemTestUnit {
         } else {
             pu.waitFor(1);
         }
+    }
+
+
+    public void startAgentAndMongo() {
+
+        MONGO_DB_CONTROLLER.start(false);
+
+        GS_AGENT_CONTROLLER.start();
+    }
+
+
+    public void stopAgentAndMongo() {
+        GS_AGENT_CONTROLLER.stop();
+
+        MONGO_DB_CONTROLLER.stop();
+    }
+
+
+    public void drop() {
+        MONGO_DB_CONTROLLER.drop();
+
     }
 }
