@@ -174,7 +174,6 @@ public class MongoDBController
         args.add("--port");
         args.add("" + port);
         args.add("--smallfiles");
-        args.add("" + true);
 
         CommandLineProcess mongod = start(args);
         waitForMongoToBeIdle();
