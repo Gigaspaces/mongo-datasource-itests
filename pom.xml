@@ -58,12 +58,12 @@
                         </goals>
                         <configuration>
                             <artifactItems>
-                                <!--<artifactItem>-->
-                                    <!--<groupId>com.gigaspaces</groupId>-->
-                                    <!--<artifactId>mongo-datasource</artifactId>-->
-                                    <!--<version>${gsVersion}</version>-->
-                                    <!--<type>${project.packaging}</type>-->
-                                <!--</artifactItem>-->
+                                <artifactItem>
+                                    <groupId>com.gigaspaces</groupId>
+                                    <artifactId>mongo-datasource</artifactId>
+                                    <version>${gsVersion}</version>
+                                    <type>${project.packaging}</type>
+                                </artifactItem>
                                 <artifactItem>
                                     <groupId>org.mongodb</groupId>
                                     <artifactId>mongo-java-driver</artifactId>
