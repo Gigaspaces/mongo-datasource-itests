@@ -15,7 +15,7 @@ public class GSAgentController {
 
 	private static final String GS_HOME = "GS_HOME";
 	private static final String QA_GROUP = "qa_group";
-	private static final String LOOKUPGROUPS = "LOOKUPGROUPS";
+	private static final String XAP_LOOKUP_GROUPS = "XAP_LOOKUP_GROUPS";
 
 	private final Admin admin = new AdminFactory().addGroup(QA_GROUP)
 			.createAdmin();
@@ -33,7 +33,7 @@ public class GSAgentController {
 		args.add(wd + File.separator + GS_AGENT);
 		GS_AGENT_PROCESS = new CommandLineProcess(args,wd);
 
-		GS_AGENT_PROCESS.addEnvironmentVariable(LOOKUPGROUPS, QA_GROUP);
+		GS_AGENT_PROCESS.addEnvironmentVariable(XAP_LOOKUP_GROUPS, QA_GROUP);
 		GS_AGENT_PROCESS.addEnvironmentVariable("java.rmi.server.hostname", "127.0.0.1");
 
 		thread = new Thread(GS_AGENT_PROCESS);
