@@ -121,6 +121,76 @@
                     <scope>system</scope>
                     <systemPath>${xap.home}/lib/optional/datasource/mongo/mongo-datasource.jar</systemPath>
                 </dependency>
+
+                <!-- gs-runtime and gs-openspaces poms-->
+                <dependency>
+                    <groupId>com.gigaspaces</groupId>
+                    <artifactId>gs-openspaces</artifactId>
+                    <version>${gsVersion}</version>
+                    <type>pom</type>
+                    <scope>import</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.gigaspaces</groupId>
+                    <artifactId>gs-runtime</artifactId>
+                    <version>${gsVersion}</version>
+                    <type>pom</type>
+                    <scope>import</scope>
+                </dependency>
+
+                <!-- Runtime dependencies -->
+                <dependency>
+                    <groupId>com.gigaspaces</groupId>
+                    <artifactId>open-core-common</artifactId>
+                    <version>${gsVersion}</version>
+                    <scope>system</scope>
+                    <systemPath>${xap.home}/lib/required/open-core-common.jar</systemPath>
+                </dependency>
+                <dependency>
+                    <groupId>com.gigaspaces</groupId>
+                    <artifactId>open-core-asm</artifactId>
+                    <version>${gsVersion}</version>
+                    <scope>system</scope>
+                    <systemPath>${xap.home}/lib/required/open-core-asm.jar</systemPath>
+                </dependency>
+                <dependency>
+                    <groupId>com.gigaspaces</groupId>
+                    <artifactId>open-core-trove</artifactId>
+                    <version>${gsVersion}</version>
+                    <scope>system</scope>
+                    <systemPath>${xap.home}/lib/required/open-core-trove.jar</systemPath>
+                </dependency>
+
+                <!-- OpenSpaces dependencies -->
+                <dependency>
+                    <groupId>com.gigaspaces</groupId>
+                    <artifactId>open-core-map</artifactId>
+                    <version>${gsVersion}</version>
+                    <scope>system</scope>
+                    <systemPath>${xap.home}/lib/required/open-core-map.jar</systemPath>
+                </dependency>
+                <dependency>
+                    <groupId>com.gigaspaces</groupId>
+                    <artifactId>open-core-near-cache</artifactId>
+                    <version>${gsVersion}</version>
+                    <scope>system</scope>
+                    <systemPath>${xap.home}/lib/required/open-core-near-cache.jar</systemPath>
+                </dependency>
+                <dependency>
+                    <groupId>com.gigaspaces</groupId>
+                    <artifactId>closed-core-security</artifactId>
+                    <version>${gsVersion}</version>
+                    <scope>system</scope>
+                    <systemPath>${xap.home}/lib/optional/security/closed-core-security.jar</systemPath>
+                </dependency>
+                <dependency>
+                    <groupId>com.gigaspaces</groupId>
+                    <artifactId>closed-core-interop</artifactId>
+                    <version>${gsVersion}</version>
+                    <scope>system</scope>
+                    <systemPath>${xap.home}/lib/optional/interop/closed-core-interop.jar</systemPath>
+                </dependency>
+
                 <dependency>
                     <groupId>org.apache.maven.surefire</groupId>
                     <artifactId>surefire-junit4</artifactId>
