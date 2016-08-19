@@ -10,20 +10,23 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses(value = {
-		BasicMongoSpaceAllInCacheTest.class,
+    	BasicMongoSpaceAllInCacheTest.class,
 		BasicMongoSpaceLRUTest.class,
 		BasicMongoSpaceChangeTest.class,
 		BasicMongoSpacePartialUpdateTest.class,
         BasicMongoInnerClassTest.class,
 		SmallTypeHierarcyMongoSpaceTest.class,
 		DocumentPojoWithDynamicPropsMongoSpaceTest.class,
-	//	SpaceMongoLoadTest.class,
-//	    SpaceMongoInitalLoadTest.class,
-    	MongoSpaceFailoverTest.class,
+	//  SpaceMongoLoadTest.class,
+//      SpaceMongoInitalLoadTest.class,
+   	    MongoSpaceFailoverTest.class,
         MongoMirrorFailoverTest.class,
         ComplexObjectMongoTest.class,
         MongoLocaleURIPojoTest.class,
-        BasicMongoPojoWithPrimitiveTest.class
+        BasicMongoPojoWithPrimitiveTest.class,
+        LeaseExpirationAllInCacheTest.class,
+        LeaseExpirationLRUTest.class,
+        PojoSchemaChangesTest.class
 })
 public class MongoSystemTestSuite {
 
@@ -32,7 +35,6 @@ public class MongoSystemTestSuite {
 
 	@BeforeClass
 	public static void beforeSuite() {
-
 		MONGO_DB_CONTROLLER.start(false);
 
 		startGSAgent();
@@ -45,7 +47,7 @@ public class MongoSystemTestSuite {
 		GS_AGENT_CONTROLLER.start();
 	}
 
-	@AfterClass
+ 	@AfterClass
 	public static void afterSuite() {
 		stopGSAgent();
 
@@ -61,6 +63,5 @@ public class MongoSystemTestSuite {
 
 	public static void drop() {
 		MONGO_DB_CONTROLLER.drop();
-
 	}
 }

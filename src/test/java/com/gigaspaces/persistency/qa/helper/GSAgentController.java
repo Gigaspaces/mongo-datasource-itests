@@ -1,14 +1,16 @@
 package com.gigaspaces.persistency.qa.helper;
 
+import org.openspaces.admin.gsm.GridServiceManager;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 import org.openspaces.admin.Admin;
 import org.openspaces.admin.AdminFactory;
 import org.openspaces.admin.gsa.GridServiceAgent;
-
 import com.gigaspaces.persistency.qa.utils.CommandLineProcess;
 
 public class GSAgentController {
@@ -29,7 +31,7 @@ public class GSAgentController {
 
 		List<String> args = new ArrayList<String>();
 
-		String wd= FilenameUtils.normalize(System.getenv(GS_HOME)+"/bin");
+		String wd = FilenameUtils.normalize(System.getenv(GS_HOME)+"/bin");
 		args.add(wd + File.separator + GS_AGENT);
 		GS_AGENT_PROCESS = new CommandLineProcess(args,wd);
 
@@ -39,9 +41,8 @@ public class GSAgentController {
 		thread = new Thread(GS_AGENT_PROCESS);
 
 		thread.start();
-
-		admin.getGridServiceManagers().waitForAtLeastOne();
-
+		
+		GridServiceManager manager = admin.getGridServiceManagers().waitForAtLeastOne();
 	}
 
 	private boolean isWin() {

@@ -25,11 +25,13 @@ public class DocumentPojoWithDynamicPropsMongoSpaceTest extends
 
 	private void testWritePojoReadPojo() {
 		test(new TestDescriptor() {
-			public TestDataTypeWithDynamicProps getWritten() {
+			@Override
+            public TestDataTypeWithDynamicProps getWritten() {
 				return new TestDataTypeWithDynamicPropsPojo();
 			}
 
-			public TestDataTypeWithDynamicProps getTemplate() {
+			@Override
+            public TestDataTypeWithDynamicProps getTemplate() {
 				return new TestDataTypeWithDynamicPropsPojo();
 			}
 		});
@@ -37,16 +39,18 @@ public class DocumentPojoWithDynamicPropsMongoSpaceTest extends
 
 	@Override
 	protected String getPUJar() {
-		return "/document-pojo-with-dynamic-properties-0.0.1-SNAPSHOT.jar";
+		return "/document-pojo-with-dynamic-properties.jar";
 	}
 
 	private void testWriteDocumentReadPojo() {
 		test(new TestDescriptor() {
-			public TestDataTypeWithDynamicProps getWritten() {
+			@Override
+            public TestDataTypeWithDynamicProps getWritten() {
 				return new TestDataTypeWithDynamicPropsDocument();
 			}
 
-			public TestDataTypeWithDynamicProps getTemplate() {
+			@Override
+            public TestDataTypeWithDynamicProps getTemplate() {
 				return new TestDataTypeWithDynamicPropsPojo();
 			}
 		});
@@ -54,11 +58,13 @@ public class DocumentPojoWithDynamicPropsMongoSpaceTest extends
 
 	private void testWritePojoReadDocument() {
 		test(new TestDescriptor() {
-			public TestDataTypeWithDynamicProps getWritten() {
+			@Override
+            public TestDataTypeWithDynamicProps getWritten() {
 				return new TestDataTypeWithDynamicPropsPojo();
 			}
 
-			public TestDataTypeWithDynamicProps getTemplate() {
+			@Override
+            public TestDataTypeWithDynamicProps getTemplate() {
 				return new TestDataTypeWithDynamicPropsDocument();
 			}
 		});
@@ -66,11 +72,13 @@ public class DocumentPojoWithDynamicPropsMongoSpaceTest extends
 
 	private void testWriteDocumentReadDocument() {
 		test(new TestDescriptor() {
-			public TestDataTypeWithDynamicProps getWritten() {
+			@Override
+            public TestDataTypeWithDynamicProps getWritten() {
 				return new TestDataTypeWithDynamicPropsDocument();
 			}
 
-			public TestDataTypeWithDynamicProps getTemplate() {
+			@Override
+            public TestDataTypeWithDynamicProps getTemplate() {
 				return new TestDataTypeWithDynamicPropsPojo();
 			}
 		});

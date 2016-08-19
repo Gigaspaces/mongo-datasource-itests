@@ -1,5 +1,8 @@
 package com.gigaspaces.persistency.qa.stest;
 
+import org.junit.After;
+
+import org.openspaces.admin.pu.ProcessingUnitInstance;
 import com.gigaspaces.client.ClearModifiers;
 import com.gigaspaces.client.CountModifiers;
 import com.gigaspaces.cluster.activeelection.SpaceMode;
@@ -10,12 +13,13 @@ import com.j_spaces.core.filters.ReplicationStatistics.ChannelState;
 import com.j_spaces.core.filters.ReplicationStatistics.OutgoingChannel;
 import com.j_spaces.core.filters.ReplicationStatistics.OutgoingReplication;
 import org.apache.commons.io.FilenameUtils;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openspaces.admin.Admin;
 import org.openspaces.admin.AdminFactory;
+import org.openspaces.admin.gsm.GridServiceManager;
+import org.openspaces.admin.gsm.GridServiceManagers;
 import org.openspaces.admin.pu.ProcessingUnit;
 import org.openspaces.admin.pu.ProcessingUnitDeployment;
 import org.openspaces.admin.space.SpaceInstance;
@@ -24,6 +28,7 @@ import org.openspaces.core.GigaSpace;
 import java.io.File;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.Assert.fail;
 
 public abstract class AbstractSystemTestUnit
 {
@@ -104,7 +109,7 @@ public abstract class AbstractSystemTestUnit
 
     protected String getMirrorService()
     {
-        return "/mongodb-qa-mirror-0.0.1-SNAPSHOT.jar";
+        return "/mongodb-qa-mirror.jar";
     }
 
     protected abstract String getPUJar();
@@ -116,7 +121,6 @@ public abstract class AbstractSystemTestUnit
                                                              getMirrorService()));
 
         ProcessingUnitDeployment deployment = new ProcessingUnitDeployment(mirrorPuArchive);
-
         try
         {
 
@@ -142,6 +146,7 @@ public abstract class AbstractSystemTestUnit
     {
         repeat(new IRepetitiveRunnable()
         {
+            @Override
             public void run() throws Exception
             {
                 boolean channelFound = false;
@@ -191,6 +196,7 @@ public abstract class AbstractSystemTestUnit
         Assert.assertTrue("memory is not 0",repeat(new IRepetitiveRunnable()
         {
 
+            @Override
             public void run() throws Exception
             {
                 gigaSpace.clear(null, ClearModifiers.EVICT_ONLY);
@@ -216,6 +222,7 @@ public abstract class AbstractSystemTestUnit
         Assert.assertTrue("replication backlog is not 0",repeat(new IRepetitiveRunnable()
         {
 
+            @Override
             public void run() throws Exception
             {
                 long l = -1;

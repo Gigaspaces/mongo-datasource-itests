@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gigaspaces</groupId>
 	<artifactId>mongo-datasource-itests</artifactId>
@@ -7,6 +7,7 @@
 	<packaging>pom</packaging>
 
 	<modules>
+        <module>model</module>
 		<module>all-in-cache</module>
 		<module>document-pojo-with-dynamic-props</module>
 		<module>initial-load</module>
@@ -14,12 +15,17 @@
 		<module>lru</module>
 		<module>mongodb-qa-mirror</module>
 		<module>partial-update</module>
-		<module>itests</module>
+		<module>lease-expiration-all-in-cache</module>
+        <module>lease-expiration-lru</module>
+        <module>qvc-qa-mirror</module>
+        <module>reload-pojo-schema</module>
+        <module>itests</module>
 	</modules>
 
 	<properties>
 		<xap.home>${env.XAP_HOME}</xap.home>
 		<gsVersion>${project.version}</gsVersion>
+        <javaVersion>1.8</javaVersion>
 	</properties>
 
 	<repositories>
@@ -33,9 +39,20 @@
 
 		<dependency>
 			<groupId>com.gigaspaces</groupId>
-			<artifactId>mongo-datasource</artifactId>
-			<version>${gsVersion}</version>
+			<artifactId>qvc-mongo-datasource</artifactId>
+			<version>1.1-SNAPSHOT</version>
 		</dependency>
+        <dependency>
+            <groupId>com.gigaspaces</groupId>
+            <artifactId>mongo-datasource</artifactId>
+            <version>${gsVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gigaspaces</groupId>
+            <artifactId>gs-runtime</artifactId>
+            <version>${gsVersion}</version>
+            <scope>provided</scope>
+        </dependency>
 		<dependency>
 			<groupId>com.gigaspaces.quality</groupId>
 			<artifactId>tf</artifactId>
@@ -44,64 +61,113 @@
 
 	</dependencies>
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.1</version>
-				<executions>
-					<execution>
-						<id>copy-dependencies</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>com.gigaspaces</groupId>
-									<artifactId>mongo-datasource</artifactId>
-									<version>${gsVersion}</version>
-									<type>${project.packaging}</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>com.google.guava</groupId>
-									<artifactId>guava</artifactId>
-									<version>r08</version>
-									<type>${project.packaging}</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>org.mongodb</groupId>
-									<artifactId>mongo-java-driver</artifactId>
-									<version>2.11.2</version>
-									<type>${project.packaging}</type>
-								</artifactItem>
-								<artifactItem>
-									<groupId>org.antlr</groupId>
-									<artifactId>antlr4-runtime</artifactId>
-									<version>4.0</version>
-									<type>${project.packaging}</type>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>${project.build.directory}/classes/lib</outputDirectory>
-							<overWriteReleases>false</overWriteReleases>
-							<overWriteSnapshots>false</overWriteSnapshots>
-							<overWriteIfNewer>true</overWriteIfNewer>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+        <pluginManagement>
+    		<plugins>
+    			<plugin>
+    				<groupId>org.apache.maven.plugins</groupId>
+    				<artifactId>maven-dependency-plugin</artifactId>
+    				<version>2.1</version>
+    				<executions>
+    					<execution>
+    						<id>copy-dependencies</id>
+    						<phase>prepare-package</phase>
+    						<goals>
+    							<goal>copy</goal>
+    						</goals>
+    						<configuration>
+    							<artifactItems>
+    								<artifactItem>
+    									<groupId>com.gigaspaces</groupId>
+    									<artifactId>mongo-datasource</artifactId>
+    									<version>${gsVersion}</version>
+    									<type>${project.packaging}</type>
+    								</artifactItem>
+                                    <artifactItem>
+                                        <groupId>com.gigaspaces</groupId>
+                                        <artifactId>qvc-mongo-datasource</artifactId>
+                                        <version>1.1-SNAPSHOT</version>
+                                        <type>${project.packaging}</type>
+                                    </artifactItem>
+    								<artifactItem>
+    									<groupId>com.google.guava</groupId>
+    									<artifactId>guava</artifactId>
+    									<version>r08</version>
+    									<type>${project.packaging}</type>
+    								</artifactItem>
+    								<artifactItem>
+    									<groupId>org.mongodb</groupId>
+    									<artifactId>mongo-java-driver</artifactId>
+    									<version>2.11.2</version>
+    									<type>${project.packaging}</type>
+    								</artifactItem>
+    								<artifactItem>
+    									<groupId>org.antlr</groupId>
+    									<artifactId>antlr4-runtime</artifactId>
+    									<version>4.0</version>
+    									<type>${project.packaging}</type>
+    								</artifactItem>
+                                    <artifactItem>
+                                        <groupId>com.gigaspaces</groupId>
+                                        <artifactId>model</artifactId>
+                                        <version>${gsVersion}</version>
+                                        <type>${project.packaging}</type>
+                                    </artifactItem>
+    							</artifactItems>
+    							<outputDirectory>${project.build.directory}/classes/lib</outputDirectory>
+    							<overWriteReleases>false</overWriteReleases>
+    							<overWriteSnapshots>false</overWriteSnapshots>
+    							<overWriteIfNewer>true</overWriteIfNewer>
+    						</configuration>
+    					</execution>
+    				</executions>
+    			</plugin>
+    
+    			<plugin>
+    				<groupId>org.apache.maven.plugins</groupId>
+    				<artifactId>maven-jar-plugin</artifactId>
+    				<version>2.3.1</version>
+    				<configuration>
+    					<outputDirectory>${java.io.tmpdir}/mongodb-system-test-deploy</outputDirectory>
+                        <finalName>${project.artifactId}</finalName>  
+    				</configuration>
+    			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
-				<configuration>
-					<outputDirectory>${java.io.tmpdir}/mongodb-system-test-deploy</outputDirectory>
-				</configuration>
-			</plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <configuration>
+                        <finalName>${project.artifactId}</finalName>
+                        <appendAssemblyId>false</appendAssemblyId>
+                        <attach>false</attach>
+                        <outputDirectory>${java.io.tmpdir}/mongodb-system-test-deploy</outputDirectory>
+                        <ignoreDirFormatExtensions>true</ignoreDirFormatExtensions>
+                        <descriptors>
+                            <descriptor>src/main/assembly/assembly.xml</descriptor>
+                        </descriptors>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>assembly</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+    		</plugins>
+        </pluginManagement>
 
-		</plugins>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>${javaVersion}</source>
+                    <target>${javaVersion}</target>
+                </configuration>
+            </plugin>
+        </plugins>
 	</build>
 
 	<profiles>

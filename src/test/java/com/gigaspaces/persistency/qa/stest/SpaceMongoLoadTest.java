@@ -61,7 +61,7 @@ public class SpaceMongoLoadTest extends AbstractSystemTestUnit {
 
 	@Override
 	protected String getPUJar() {
-		return "/load-0.0.1-SNAPSHOT.jar";
+		return "/load.jar";
 	}
 
 	private void test(final GigaSpace gigaSpace) throws Throwable {
@@ -191,7 +191,8 @@ public class SpaceMongoLoadTest extends AbstractSystemTestUnit {
 	// }
 
 	private class IssueWriter extends Thread {
-		public void run() {
+		@Override
+        public void run() {
 			try {
 				while (work) {
 					barrier.inspect();
@@ -210,7 +211,8 @@ public class SpaceMongoLoadTest extends AbstractSystemTestUnit {
 	}
 
 	private class IssueTaker extends Thread {
-		public void run() {
+		@Override
+        public void run() {
 			try {
 				while (work) {
 					barrier.inspect();
@@ -256,7 +258,8 @@ public class SpaceMongoLoadTest extends AbstractSystemTestUnit {
 	}
 
 	private class IssueReader extends Thread {
-		public void run() {
+		@Override
+        public void run() {
 			try {
 				while (work) {
 					barrier.inspect();
