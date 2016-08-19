@@ -51,6 +51,6 @@ public class BasicMongoSpacePartialUpdateTest extends AbstractSystemTestUnit {
 
 	@Override
 	protected String getPUJar() {		
-		return "/partial-update-0.0.1-SNAPSHOT.jar";
+		return "/partial-update.jar";
 	}
 }

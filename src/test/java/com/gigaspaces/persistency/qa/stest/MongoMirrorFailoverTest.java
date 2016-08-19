@@ -23,6 +23,7 @@ public class MongoMirrorFailoverTest extends AbstractSystemTestUnit {
         gigaSpace.getTypeManager().registerTypeDescriptor(IssueDocument.getTypeDescriptor());
         say("Mongo Mirror Failover test started ...");
         Thread t = new Thread() {
+            @Override
             public void run() {
                 try {
                     //sleep in order to let mirror get restarted first
@@ -69,7 +70,7 @@ public class MongoMirrorFailoverTest extends AbstractSystemTestUnit {
 
     @Override
     protected String getPUJar() {
-        return "/lru-0.0.1-SNAPSHOT.jar";
+        return "/lru.jar";
     }
 
     private void assertMongoEqualsSpace(List<IssueDocument> beforeClear) {

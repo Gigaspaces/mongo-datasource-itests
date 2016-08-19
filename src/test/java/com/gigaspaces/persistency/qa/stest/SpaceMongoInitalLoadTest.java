@@ -61,12 +61,12 @@ public class SpaceMongoInitalLoadTest extends AbstractSystemTestUnit {
 
 	@Override
 	protected String getMirrorService() {
-		return "/mongodb-qa-mirror-0.0.1-SNAPSHOT.jar";
+		return "/mongodb-qa-mirror.jar";
 	}
 
 	@Override
 	protected String getPUJar() {
-		return "/initial-load-0.0.1-SNAPSHOT.jar";
+		return "/initial-load.jar";
 	}
 
 	private void assertValidInitialDataLoad(Map<Integer, HashSet<MongoIssuePojo>> objectsByPartition) {
@@ -160,7 +160,8 @@ public class SpaceMongoInitalLoadTest extends AbstractSystemTestUnit {
 	// }
 
 	private class IssueWriter extends Thread {
-		public void run() {
+		@Override
+        public void run() {
 			try {
 				while (work) {
 					barrier.inspect();

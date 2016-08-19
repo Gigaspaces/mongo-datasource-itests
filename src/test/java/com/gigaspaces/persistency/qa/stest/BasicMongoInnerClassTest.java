@@ -48,6 +48,7 @@ public class BasicMongoInnerClassTest extends AbstractSystemTestUnit {
             return _id != null ? _id.hashCode() : 0;
         }
 
+        @Override
         public int compareTo(InnerPojo o) {
             return o.getId().compareTo(getId());
         }
@@ -90,7 +91,7 @@ public class BasicMongoInnerClassTest extends AbstractSystemTestUnit {
 
     @Override
     protected String getPUJar() {
-        return "/lru-0.0.1-SNAPSHOT.jar";
+        return "/lru.jar";
     }
 
 
