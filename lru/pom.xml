@@ -6,7 +6,7 @@
 	 <parent>
 	    <groupId>com.gigaspaces</groupId>
 	    <artifactId>mongo-datasource-itests</artifactId>
-		 <version>10.2.0-SNAPSHOT</version>
+		 <version>10.2.0-13961-RELEASE</version>
 		 <relativePath>../../mongo-datasource-itests/pom.xml</relativePath>
     </parent>
 </project>
